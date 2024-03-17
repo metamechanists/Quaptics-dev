@@ -1,23 +1,26 @@
 package org.metamechanists.quaptics.implementation.attachments;
 
+import com.google.common.collect.HashBiMap;
+import dev.sefiraat.sefilib.entity.display.builders.ItemDisplayBuilder;
+import io.github.bakedlibs.dough.blocks.BlockPosition;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
-import io.github.thebusybiscuit.slimefun4.utils.ChatUtils;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
-import org.bukkit.entity.BlockDisplay;
+import org.bukkit.entity.Display;
 import org.bukkit.entity.Interaction;
+import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
+import org.metamechanists.displaymodellib.builders.InteractionBuilder;
 import org.metamechanists.quaptics.implementation.tools.multiblockwand.MultiblockWand;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
 import org.metamechanists.quaptics.utils.BlockStorageAPI;
 import org.metamechanists.quaptics.utils.Language;
-import org.metamechanists.displaymodellib.builders.InteractionBuilder;
-import org.metamechanists.displaymodellib.models.components.ModelCuboid;
+import org.metamechanists.quaptics.utils.id.simple.ItemDisplayId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,14 +29,16 @@ import java.util.UUID;
 
 @FunctionalInterface
 public interface ComplexMultiblock {
+    Map<BlockPosition, ItemDisplayId> CACHE = HashBiMap.create();
     Color EMPTY_COLOR = Color.fromARGB(255, 255, 255, 0);
     Color WRONG_MATERIAL_COLOR = Color.fromARGB(255, 255, 0, 0);
     Color RIGHT_MATERIAL_COLOR = Color.fromARGB(255, 0, 255, 0);
-    int DISPLAY_BRIGHTNESS = 15;
+    Display.Brightness DISPLAY_BRIGHTNESS = new Display.Brightness(15, 15);
     float DISPLAY_SIZE = 0.75F;
-    ModelCuboid GHOST_BLOCK_DISPLAY = new ModelCuboid()
-            .size(DISPLAY_SIZE)
-            .brightness(DISPLAY_BRIGHTNESS);
+    ItemDisplayBuilder GHOST_BLOCK_DISPLAY = new ItemDisplayBuilder()
+            .setDisplayHeight(DISPLAY_SIZE)
+            .setDisplayWidth(DISPLAY_SIZE)
+            .setBrightness(DISPLAY_BRIGHTNESS);
 
     private static boolean isStructureBlockValid(final @NotNull Block center, final @NotNull Vector offset, final ItemStack predicted) {
         final Block actual = center.getRelative(offset.getBlockX(), offset.getBlockY(), offset.getBlockZ());
@@ -53,32 +58,39 @@ public interface ComplexMultiblock {
         return getStructure().entrySet().stream().allMatch(entry -> isStructureBlockValid(center, entry.getKey(), entry.getValue()));
     }
 
-    private static @NotNull @Unmodifiable List<UUID> visualiseBlock(final @NotNull Block center, final @NotNull Vector offset, final @NotNull ItemStack itemStack) {
+    private static @NotNull @Unmodifiable List<UUID> projectBlock(final @NotNull Block center, final @NotNull Vector offset, final @NotNull ItemStack itemStack) {
         final Block block = center.getRelative(offset.getBlockX(), offset.getBlockY(), offset.getBlockZ());
         if (block.getType().isEmpty()) {
-            GHOST_BLOCK_DISPLAY.glow(EMPTY_COLOR);
+            GHOST_BLOCK_DISPLAY
+                    .setGlowColorOverride(EMPTY_COLOR)
+                    .setDisplayHeight(DISPLAY_SIZE)
+                    .setDisplayWidth(DISPLAY_SIZE);
         } else {
-            GHOST_BLOCK_DISPLAY.glow(isStructureBlockValid(block, itemStack) ? RIGHT_MATERIAL_COLOR : WRONG_MATERIAL_COLOR);
+            GHOST_BLOCK_DISPLAY
+                    .setGlowColorOverride(isStructureBlockValid(block, itemStack) ? RIGHT_MATERIAL_COLOR : WRONG_MATERIAL_COLOR)
+                    .setDisplayHeight(0.0F)
+                    .setDisplayWidth(0.0F);
         }
 
-        final BlockDisplay blockDisplay = GHOST_BLOCK_DISPLAY
-                .material(itemStack.getType())
-                .build(block.getLocation().toCenterLocation());
+        final ItemDisplay itemDisplay = GHOST_BLOCK_DISPLAY
+                .setItemStack(new ItemStack(itemStack))
+                .setLocation(block.getLocation().toCenterLocation())
+                .build();
         final Interaction interaction = new InteractionBuilder()
                 .width(DISPLAY_SIZE)
                 .height(DISPLAY_SIZE)
                 .build(block.getLocation().toCenterLocation());
 
-        final SlimefunItem slimefunItem = SlimefunItem.getByItem(itemStack);
-        final String blockName = slimefunItem != null ? slimefunItem.getItemName() : ChatUtils.humanize(itemStack.getType().name());
-        final PersistentDataTraverser traverser = new PersistentDataTraverser(interaction.getUniqueId());
-        traverser.set("blockName", blockName);
+        CACHE.put(new BlockPosition(block), new ItemDisplayId(itemDisplay.getUniqueId()));
 
-        return List.of(blockDisplay.getUniqueId(), interaction.getUniqueId());
+        final PersistentDataTraverser traverser = new PersistentDataTraverser(interaction.getUniqueId());
+        traverser.set("linked_block", new ItemDisplayId(itemDisplay.getUniqueId()));
+
+        return List.of(itemDisplay.getUniqueId(), interaction.getUniqueId());
     }
     default void visualiseStructure(final ItemStack wand, final Block center) {
         final List<UUID> uuids = new ArrayList<>();
-        getStructure().forEach((key, value) -> uuids.addAll(visualiseBlock(center, key, value)));
+        getStructure().forEach((key, value) -> uuids.addAll(projectBlock(center, key, value)));
         final PersistentDataTraverser traverser = new PersistentDataTraverser(wand);
         traverser.set("uuids", uuids);
         traverser.save(wand);

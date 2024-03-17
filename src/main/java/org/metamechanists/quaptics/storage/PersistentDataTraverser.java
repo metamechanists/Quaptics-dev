@@ -24,6 +24,7 @@ import org.metamechanists.quaptics.utils.id.complex.LinkId;
 import org.metamechanists.quaptics.utils.id.simple.BlockDisplayId;
 import org.metamechanists.quaptics.utils.id.simple.DisplayGroupId;
 import org.metamechanists.quaptics.utils.id.simple.InteractionId;
+import org.metamechanists.quaptics.utils.id.simple.ItemDisplayId;
 import org.metamechanists.quaptics.utils.id.simple.TextDisplayId;
 
 import java.util.HashMap;
@@ -166,6 +167,10 @@ public class PersistentDataTraverser {
     public @Nullable BlockDisplayId getBlockDisplayId(@NotNull final String key) {
         final String uuid = getString(key);
         return uuid == null ? null : new BlockDisplayId(uuid);
+    }
+    public @Nullable ItemDisplayId getItemDisplayId(@NotNull final String key) {
+        final String uuid = getString(key);
+        return uuid == null ? null : new ItemDisplayId(uuid);
     }
     public @Nullable ConnectionGroupId getConnectionGroupId(@NotNull final String key) {
         final String uuid = getString(key);
