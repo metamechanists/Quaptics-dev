@@ -19,46 +19,46 @@ import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 import java.util.Objects;
 import java.util.Optional;
 
-public class ItemProjectorConfigPanel extends ConfigPanel {
+public class CreativeConcentratorConfigPanel extends ConfigPanel {
 
-    public ItemProjectorConfigPanel(@NotNull final Location location, final ConnectionGroupId groupId, final float rotationY) {
+    public CreativeConcentratorConfigPanel(@NotNull final Location location, final ConnectionGroupId groupId, final float rotationY) {
         super(groupId, location, rotationY);
     }
 
-    public ItemProjectorConfigPanel(@NotNull final ConfigPanelId id, final ConnectionGroupId groupId) {
+    public CreativeConcentratorConfigPanel(@NotNull final ConfigPanelId id, final ConnectionGroupId groupId) {
         super(id, groupId);
     }
 
     @Override
     protected ConfigPanelContainer buildPanelContainer(@NotNull final ConnectionGroupId groupId, @NotNull final Location location, final float rotationY) {
         return new ConfigPanelBuilder(groupId, location.clone().add(getOffset()), SIZE, rotationY)
-                .addAttribute("height", "&fHeight")
-                .addAttribute("size", "&fSize")
-                .addAttribute("mode", "&fMode")
+                .addAttribute("power", Lore.POWER_SYMBOL + "&fPower")
+                .addAttribute("frequency", Lore.FREQUENCY_SYMBOL + "&fFrequency")
+                .addAttribute("phase", Lore.PHASE_SYMBOL + "&fPhase")
                 .build();
     }
 
     @Override
     public void interact(@NotNull final Player player, @NotNull final Location location, final String name, final String type) {
-        if ("height".equals(name)) {
-            double height = BlockStorageAPI.getDouble(location, Keys.BS_HEIGHT);
-            height += "add".equals(type) ? 1 : -1;
-            height = Utils.clampToRange(height, 0, ItemProjector.MAX_HEIGHT);
-            BlockStorageAPI.set(location, Keys.BS_HEIGHT, height);
+        if ("power".equals(name)) {
+            double power = BlockStorageAPI.getDouble(location, Keys.BS_OUTPUT_POWER);
+            power += ("add".equals(type) ? 1 : -1) * (player.isSneaking() ? 100 : 1);
+            power = Utils.clampToRange(power, 0, Double.MAX_VALUE);
+            BlockStorageAPI.set(location, Keys.BS_OUTPUT_POWER, power);
         }
 
-        if ("size".equals(name)) {
-            double size = BlockStorageAPI.getDouble(location, Keys.BS_SIZE);
-            size += "add".equals(type) ? 1 : -1;
-            size = Utils.clampToRange(size, 0, ItemProjector.MAX_SIZE);
-            BlockStorageAPI.set(location, Keys.BS_SIZE, size);
+        if ("frequency".equals(name)) {
+            double frequency = BlockStorageAPI.getDouble(location, Keys.BS_OUTPUT_FREQUENCY);
+            frequency += ("add".equals(type) ? 1 : -1) * (player.isSneaking() ? 100 : 1);
+            frequency = Utils.clampToRange(frequency, 0, Double.MAX_VALUE);
+            BlockStorageAPI.set(location, Keys.BS_OUTPUT_FREQUENCY, frequency);
         }
 
-        if ("mode".equals(name)) {
-            int size = BlockStorageAPI.getInt(location, Keys.BS_MODE);
-            size += "add".equals(type) ? 1 : -1;
-            size = Utils.clampToRange(size, 0, ItemProjector.MAX_MODE);
-            BlockStorageAPI.set(location, Keys.BS_MODE, size);
+        if ("phase".equals(name)) {
+            int phase = BlockStorageAPI.getInt(location, Keys.BS_OUTPUT_PHASE);
+            phase += ("add".equals(type) ? 1 : -1) * (player.isSneaking() ? 12 : 1);
+            phase = Utils.clampToRange(phase, 0, 360);
+            BlockStorageAPI.set(location, Keys.BS_OUTPUT_PHASE, phase);
         }
 
         ItemProjector.onConfigUpdated(location);
@@ -81,13 +81,13 @@ public class ItemProjectorConfigPanel extends ConfigPanel {
             return;
         }
 
-        final double height = BlockStorageAPI.getDouble(location.get(), Keys.BS_HEIGHT);
-        final double size = BlockStorageAPI.getDouble(location.get(), Keys.BS_SIZE);
-        final int mode = BlockStorageAPI.getInt(location.get(), Keys.BS_MODE);
+        final double power = BlockStorageAPI.getDouble(location.get(), Keys.BS_OUTPUT_POWER);
+        final double frequency = BlockStorageAPI.getDouble(location.get(), Keys.BS_OUTPUT_FREQUENCY);
+        final int phase = BlockStorageAPI.getInt(location.get(), Keys.BS_OUTPUT_PHASE);
 
-        container.setValue("height", Lore.progressBar(height, ItemProjector.MAX_HEIGHT, "&b", "&8", "&b"));
-        container.setValue("size", Lore.progressBar(size, ItemProjector.MAX_SIZE, "&b", "&8", "&b"));
-        container.setValue("mode", Objects.toString(mode));
+        container.setValue("power", Objects.toString(power));
+        container.setValue("frequency", Objects.toString(frequency));
+        container.setValue("phase", Objects.toString(phase));
     }
 
     @SuppressWarnings("MagicNumber")

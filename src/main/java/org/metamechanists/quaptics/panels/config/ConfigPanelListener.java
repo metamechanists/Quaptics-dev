@@ -46,6 +46,6 @@ public class ConfigPanelListener implements Listener {
             return;
         }
 
-        block.interact(group.get(), name, type);
+        block.interact(event.getPlayer(), group.get(), name, type);
     }
 }

@@ -17,25 +17,25 @@ import java.util.Objects;
 @UtilityClass
 public class Lore {
     private final double ROUND_TO_INT_THRESHOLD = 0.0001;
-    private final String ATTRIBUTE_SYMBOL = "&8⇨ ";
-    private final String COUNT_SYMBOL = Colors.QUAPTIC_COMPONENTS.getFormattedColor() + "◎ ";
-    private final String RANGE_SYMBOL = Colors.QUAPTIC_COMPONENTS.getFormattedColor() + "↔ ";
-    private final String SPEED_SYMBOL = Colors.QUAPTIC_COMPONENTS.getFormattedColor() + "→ ";
-    private final String DAMAGE_SYMBOL = Colors.QUAPTIC_COMPONENTS.getFormattedColor() + "🗡 ";
-    private final String CHARGE_SYMBOL = Colors.CHARGE.getFormattedColor() + "◆ ";
-    private final String POWER_SYMBOL = Colors.POWER.getFormattedColor() + "⏻ ";
-    private final String FREQUENCY_SYMBOL = Colors.FREQUENCY.getFormattedColor() + "∀ ";
-    private final String PHASE_SYMBOL = Colors.PHASE.getFormattedColor() + "۞ ";
-    private final String PERCENTAGE_SUFFIX = " &8%";
-    private final String CHARGE_SUFFIX = " &8QEU";
-    private final String POWER_SUFFIX = " &8W";
-    private final String RANGE_SUFFIX = " &8blocks";
-    private final String DAMAGE_SUFFIX = " &8dps";
-    private final String FREQUENCY_SUFFIX = " &8Hz";
-    private final String SECONDS_SUFFIX = " &8seconds";
-    private final String MINUTES_SUFFIX = " &8minutes";
-    private final String PHASE_SUFFIX = " &8°";
-    private final String MULTIBLOCK_SYMBOL = "&3★";
+    public final String ATTRIBUTE_SYMBOL = "&8⇨ ";
+    public final String COUNT_SYMBOL = Colors.QUAPTIC_COMPONENTS.getFormattedColor() + "◎ ";
+    public final String RANGE_SYMBOL = Colors.QUAPTIC_COMPONENTS.getFormattedColor() + "↔ ";
+    public final String SPEED_SYMBOL = Colors.QUAPTIC_COMPONENTS.getFormattedColor() + "→ ";
+    public final String DAMAGE_SYMBOL = Colors.QUAPTIC_COMPONENTS.getFormattedColor() + "🗡 ";
+    public final String CHARGE_SYMBOL = Colors.CHARGE.getFormattedColor() + "◆ ";
+    public final String POWER_SYMBOL = Colors.POWER.getFormattedColor() + "⏻ ";
+    public final String FREQUENCY_SYMBOL = Colors.FREQUENCY.getFormattedColor() + "∀ ";
+    public final String PHASE_SYMBOL = Colors.PHASE.getFormattedColor() + "۞ ";
+    public final String PERCENTAGE_SUFFIX = " &8%";
+    public final String CHARGE_SUFFIX = " &8QEU";
+    public final String POWER_SUFFIX = " &8W";
+    public final String RANGE_SUFFIX = " &8blocks";
+    public final String DAMAGE_SUFFIX = " &8dps";
+    public final String FREQUENCY_SUFFIX = " &8Hz";
+    public final String SECONDS_SUFFIX = " &8seconds";
+    public final String MINUTES_SUFFIX = " &8minutes";
+    public final String PHASE_SUFFIX = " &8°";
+    public final String MULTIBLOCK_SYMBOL = "&3★";
     private final double SLIMEFUN_TICKS_PER_SECOND = 2.0;
 
     private @NotNull DecimalFormat getDecimalFormat0dp() {

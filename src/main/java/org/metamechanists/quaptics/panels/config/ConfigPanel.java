@@ -1,6 +1,7 @@
 package org.metamechanists.quaptics.panels.config;
 
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
@@ -46,6 +47,6 @@ public abstract class ConfigPanel {
     @SuppressWarnings("unused")
     protected abstract Vector getOffset();
     protected abstract ConfigPanelContainer buildPanelContainer(@NotNull final ConnectionGroupId groupId, @NotNull final Location location, final float rotationY);
-    public abstract void interact(@NotNull final Location location, final String name, final String type);
+    public abstract void interact(@NotNull final Player player, @NotNull final Location location, final String name, final String type);
     protected abstract void update();
 }

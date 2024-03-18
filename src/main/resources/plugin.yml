@@ -13,6 +13,9 @@ commands:
     usage: /quaptics <subcommand>
 
 permissions:
+  quaptics.creative:
+    default: op
+    description: Gives permission to creative items
   quaptics.command.charge:
     default: op
     description: Charge the held item by a specified amount

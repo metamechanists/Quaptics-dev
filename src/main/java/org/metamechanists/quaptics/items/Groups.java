@@ -17,6 +17,7 @@ import org.metamechanists.quaptics.items.groups.BeaconModules;
 import org.metamechanists.quaptics.items.groups.BeamCreation;
 import org.metamechanists.quaptics.items.groups.BeamManipulation;
 import org.metamechanists.quaptics.items.groups.CraftingComponents;
+import org.metamechanists.quaptics.items.groups.CreativeComponents;
 import org.metamechanists.quaptics.items.groups.FrequencyAndPhase;
 import org.metamechanists.quaptics.items.groups.Guide;
 import org.metamechanists.quaptics.items.groups.Machines;
@@ -64,6 +65,8 @@ public class Groups {
 
     public final ItemGroup TESTING = new DummyItemGroup(Keys.TESTING,
             new CustomItemStack(Material.GRAY_CONCRETE, "&8Testing"));
+    public final ItemGroup CREATIVE = new DummyItemGroup(Keys.CREATIVE,
+            new CustomItemStack(Material.MAGENTA_STAINED_GLASS, Colors.CREATIVE.getFormattedColor() + "Creative Components"));
 
     public void initialize() {
         final SlimefunAddon addon = Quaptics.getInstance();
@@ -79,6 +82,8 @@ public class Groups {
         MAIN.addItemGroup(BEACON_MODULES);
         MAIN.register(addon);
 
+        CREATIVE.register(addon);
+
         Guide.initialize();
         Tools.initialize();
         CraftingComponents.initialize();
@@ -88,6 +93,7 @@ public class Groups {
         Machines.initialize();
         BeaconComponents.initialize();
         BeaconModules.initialize();
+        CreativeComponents.initialize();
 
         Slimefun.getRegistry().getAllSlimefunItems().stream()
                 .filter(ConnectedBlock.class::isInstance)

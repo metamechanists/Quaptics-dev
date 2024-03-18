@@ -1,6 +1,7 @@
 package org.metamechanists.quaptics.panels.config.implementation;
 
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
@@ -37,7 +38,7 @@ public class LaunchpadConfigPanel extends ConfigPanel {
     }
 
     @Override
-    public void interact(@NotNull final Location location, final String name, final String type) {
+    public void interact(@NotNull final Player player, @NotNull final Location location, final String name, final String type) {
         final Optional<Vector> velocity = BlockStorageAPI.getVector(location, Keys.BS_VELOCITY);
         if (velocity.isEmpty()) {
             return;

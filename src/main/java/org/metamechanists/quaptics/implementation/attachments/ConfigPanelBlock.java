@@ -24,7 +24,7 @@ public interface ConfigPanelBlock {
         BlockStorageAPI.set(location, Keys.BS_PANEL_ID, id);
     }
 
-    default void interact(@NotNull final ConnectionGroup group, final String name, final String type) {
+    default void interact(@NotNull final Player player, @NotNull final ConnectionGroup group, final String name, final String type) {
         final Optional<Location> location = group.getLocation();
         if (location.isEmpty()) {
             return;
@@ -36,7 +36,7 @@ public interface ConfigPanelBlock {
         }
 
         final ConfigPanel panel = getPanel(panelId.get(), group.getId());
-        panel.interact(location.get(), name, type);
+        panel.interact(player, location.get(), name, type);
     }
 
     default void onPlaceConfigPanelBlock(@NotNull final BlockPlaceEvent event) {

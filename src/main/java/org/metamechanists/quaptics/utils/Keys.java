@@ -24,6 +24,7 @@ public class Keys {
     public final NamespacedKey BEACON_MODULES = newKey("BEACON_MODULES");
     public final NamespacedKey MACHINES = newKey("MACHINES");
     public final NamespacedKey TESTING = newKey("TESTING");
+    public final NamespacedKey CREATIVE = newKey("CREATIVE");
     public final NamespacedKey SOURCE = newKey("SOURCE");
     public final NamespacedKey CHARGE = newKey("CHARGE");
 
@@ -52,6 +53,8 @@ public class Keys {
     public final String BS_FREQUENCY = "QP_FREQUENCY";
     public final String BS_INPUT_POWER = "QP_INPUT_POWER";
     public final String BS_OUTPUT_POWER = "QP_OUTPUT_POWER";
+    public final String BS_OUTPUT_FREQUENCY = "QP_OUTPUT_FREQUENCY";
+    public final String BS_OUTPUT_PHASE = "QP_OUTPUT_PHASE";
     public final String BS_ANIMATION_OFFSET = "QP_ANIMATION_OFFSET";
     public final String BS_INTERACTION_ID_LIST = "QP_INTERACTION_ID_LIST";
     public final String BS_PLAYER_RECEIVERS = "QP_PLAYER_RECEIVERS";
