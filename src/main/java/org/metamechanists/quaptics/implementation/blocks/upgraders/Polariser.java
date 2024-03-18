@@ -66,7 +66,8 @@ public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, Pow
             CraftingComponents.PHASE_CRYSTAL_5, 5,
             CraftingComponents.PHASE_CRYSTAL_15, 15,
             CraftingComponents.PHASE_CRYSTAL_45, 45,
-            CraftingComponents.PHASE_CRYSTAL_90, 90);
+            CraftingComponents.PHASE_CRYSTAL_90, 90,
+            CraftingComponents.PHASE_CRYSTAL_180, 180);
 
     public Polariser(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
