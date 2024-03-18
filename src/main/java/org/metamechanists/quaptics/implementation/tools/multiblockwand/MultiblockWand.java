@@ -20,8 +20,9 @@ public class MultiblockWand extends SlimefunItem {
             Material.AMETHYST_SHARD,
             "&bMultiblock Wand",
             "&7● Shows you how to build complex multiblocks",
-            "&7● &eRight Click &7a multiblock to see how to build it",
-            "&7● &eRight Click &7a projected block to see what block it is");
+            "&7● &eRight Click &7a multiblock to see how to build it (works in offhand)",
+            "&7● &eRight Click &7a projected block with an empty hand to see what block it is",
+            "&7● &eRight Click &7a projected block with the corresponding item to quick place it");
 
     public MultiblockWand(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);

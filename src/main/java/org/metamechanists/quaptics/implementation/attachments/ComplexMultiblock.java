@@ -1,7 +1,7 @@
 package org.metamechanists.quaptics.implementation.attachments;
 
-import com.google.common.collect.HashBiMap;
 import dev.sefiraat.sefilib.entity.display.builders.ItemDisplayBuilder;
+import dev.sefiraat.sefilib.misc.TransformationBuilder;
 import io.github.bakedlibs.dough.blocks.BlockPosition;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import org.bukkit.Color;
@@ -12,6 +12,7 @@ import org.bukkit.entity.Interaction;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Transformation;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
@@ -23,22 +24,21 @@ import org.metamechanists.quaptics.utils.Language;
 import org.metamechanists.quaptics.utils.id.simple.ItemDisplayId;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 @FunctionalInterface
 public interface ComplexMultiblock {
-    Map<BlockPosition, ItemDisplayId> CACHE = HashBiMap.create();
+    Map<BlockPosition, ItemDisplayId> CACHE = new HashMap<>();
     Color EMPTY_COLOR = Color.fromARGB(255, 255, 255, 0);
     Color WRONG_MATERIAL_COLOR = Color.fromARGB(255, 255, 0, 0);
     Color RIGHT_MATERIAL_COLOR = Color.fromARGB(255, 0, 255, 0);
     Display.Brightness DISPLAY_BRIGHTNESS = new Display.Brightness(15, 15);
     float DISPLAY_SIZE = 0.75F;
-    ItemDisplayBuilder GHOST_BLOCK_DISPLAY = new ItemDisplayBuilder()
-            .setDisplayHeight(DISPLAY_SIZE)
-            .setDisplayWidth(DISPLAY_SIZE)
-            .setBrightness(DISPLAY_BRIGHTNESS);
+    Transformation TRANSFORMATION = new TransformationBuilder().scale(DISPLAY_SIZE, DISPLAY_SIZE, DISPLAY_SIZE).build();
+    ItemDisplayBuilder GHOST_BLOCK_DISPLAY = new ItemDisplayBuilder().setTransformation(TRANSFORMATION).setBrightness(DISPLAY_BRIGHTNESS);
 
     private static boolean isStructureBlockValid(final @NotNull Block center, final @NotNull Vector offset, final ItemStack predicted) {
         final Block actual = center.getRelative(offset.getBlockX(), offset.getBlockY(), offset.getBlockZ());
@@ -61,21 +61,18 @@ public interface ComplexMultiblock {
     private static @NotNull @Unmodifiable List<UUID> projectBlock(final @NotNull Block center, final @NotNull Vector offset, final @NotNull ItemStack itemStack) {
         final Block block = center.getRelative(offset.getBlockX(), offset.getBlockY(), offset.getBlockZ());
         if (block.getType().isEmpty()) {
-            GHOST_BLOCK_DISPLAY
-                    .setGlowColorOverride(EMPTY_COLOR)
-                    .setDisplayHeight(DISPLAY_SIZE)
-                    .setDisplayWidth(DISPLAY_SIZE);
+            GHOST_BLOCK_DISPLAY.setGlowColorOverride(EMPTY_COLOR);
         } else {
-            GHOST_BLOCK_DISPLAY
-                    .setGlowColorOverride(isStructureBlockValid(block, itemStack) ? RIGHT_MATERIAL_COLOR : WRONG_MATERIAL_COLOR)
-                    .setDisplayHeight(0.0F)
-                    .setDisplayWidth(0.0F);
+            GHOST_BLOCK_DISPLAY.setGlowColorOverride(isStructureBlockValid(block, itemStack)
+                            ? RIGHT_MATERIAL_COLOR
+                            : WRONG_MATERIAL_COLOR);
         }
 
         final ItemDisplay itemDisplay = GHOST_BLOCK_DISPLAY
                 .setItemStack(new ItemStack(itemStack))
                 .setLocation(block.getLocation().toCenterLocation())
                 .build();
+        itemDisplay.setGlowing(true);
         final Interaction interaction = new InteractionBuilder()
                 .width(DISPLAY_SIZE)
                 .height(DISPLAY_SIZE)

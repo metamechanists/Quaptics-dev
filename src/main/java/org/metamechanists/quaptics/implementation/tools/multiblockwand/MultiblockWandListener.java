@@ -3,6 +3,8 @@ package org.metamechanists.quaptics.implementation.tools.multiblockwand;
 import io.github.bakedlibs.dough.blocks.BlockPosition;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import io.github.thebusybiscuit.slimefun4.utils.ChatUtils;
 import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -26,7 +28,7 @@ import org.metamechanists.quaptics.utils.id.simple.ItemDisplayId;
 public class MultiblockWandListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public static void placeEvent(@NotNull final BlockPlaceEvent event) {
-        updateProjection(event.getBlock());
+        Slimefun.runSync(() -> updateProjection(event.getBlock()), 1L);
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -51,15 +53,15 @@ public class MultiblockWandListener implements Listener {
         final ItemStack mainHandItem = event.getPlayer().getInventory().getItemInMainHand();
         final ItemStack offHandItem = event.getPlayer().getInventory().getItemInOffHand();
         if (block.isEmpty() && (SlimefunUtils.isItemSimilar(mainHandItem, itemStack, true) || SlimefunUtils.isItemSimilar(offHandItem, itemStack, true))) {
-            final boolean mainHand = SlimefunUtils.isItemSimilar(mainHandItem, itemStack, true);
-            final BlockPlaceEvent placeEvent = new BlockPlaceEvent(block, block.getState(), block, itemStack, event.getPlayer(), true, mainHand ? EquipmentSlot.HAND : EquipmentSlot.OFF_HAND);
-            if (placeEvent.callEvent()) {
+            if (Slimefun.getProtectionManager().hasPermission(event.getPlayer(), block, Interaction.PLACE_BLOCK)) {
                 block.setType(itemStack.getType());
                 if (slimefunItem != null) {
+                    final boolean mainHand = SlimefunUtils.isItemSimilar(mainHandItem, itemStack, true);
+                    final BlockPlaceEvent placeEvent = new BlockPlaceEvent(block, block.getState(), block, itemStack, event.getPlayer(), true, mainHand ? EquipmentSlot.HAND : EquipmentSlot.OFF_HAND);
                     BlockStorage.store(block, slimefunItem.getId());
                     slimefunItem.callItemHandler(BlockPlaceHandler.class, handler -> handler.onPlayerPlace(placeEvent));
                 }
-                updateProjection(clickedEntity.getLocation().getBlock());
+                Slimefun.runSync(() -> updateProjection(block), 1L);
                 return;
             }
         }
@@ -68,12 +70,12 @@ public class MultiblockWandListener implements Listener {
             final String blockName = slimefunItem != null ? slimefunItem.getItemName() : ChatUtils.humanize(itemStack.getType().name());
             Language.sendLanguageMessage(event.getPlayer(), "multiblock.block-name", blockName);
         }
-        updateProjection(clickedEntity.getLocation().getBlock());
+        Slimefun.runSync(() -> updateProjection(block), 1L);
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public static void breakEvent(@NotNull final BlockBreakEvent event) {
-        updateProjection(event.getBlock());
+        Slimefun.runSync(() -> updateProjection(event.getBlock()), 1L);
     }
 
     public static void updateProjection(Block block) {
@@ -99,14 +101,10 @@ public class MultiblockWandListener implements Listener {
 
             if (block.isEmpty()) {
                 itemDisplay.setGlowColorOverride(ComplexMultiblock.EMPTY_COLOR);
-                itemDisplay.setDisplayHeight(ComplexMultiblock.DISPLAY_SIZE);
-                itemDisplay.setDisplayWidth(ComplexMultiblock.DISPLAY_SIZE);
             } else {
                 itemDisplay.setGlowColorOverride(correct
                         ? ComplexMultiblock.RIGHT_MATERIAL_COLOR
                         : ComplexMultiblock.WRONG_MATERIAL_COLOR);
-                itemDisplay.setDisplayHeight(0.0F);
-                itemDisplay.setDisplayWidth(0.0F);
             }
         });
     }
