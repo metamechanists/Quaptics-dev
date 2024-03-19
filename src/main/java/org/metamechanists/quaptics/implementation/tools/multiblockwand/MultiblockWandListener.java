@@ -55,13 +55,13 @@ public class MultiblockWandListener implements Listener {
         if (block.isEmpty() && (SlimefunUtils.isItemSimilar(mainHandItem, itemStack, true) || SlimefunUtils.isItemSimilar(offHandItem, itemStack, true))) {
             if (Slimefun.getProtectionManager().hasPermission(event.getPlayer(), block, Interaction.PLACE_BLOCK)) {
                 block.setType(itemStack.getType());
+                final boolean mainHand = SlimefunUtils.isItemSimilar(mainHandItem, itemStack, true);
                 if (slimefunItem != null) {
-                    final boolean mainHand = SlimefunUtils.isItemSimilar(mainHandItem, itemStack, true);
                     final BlockPlaceEvent placeEvent = new BlockPlaceEvent(block, block.getState(), block, itemStack, event.getPlayer(), true, mainHand ? EquipmentSlot.HAND : EquipmentSlot.OFF_HAND);
                     BlockStorage.store(block, slimefunItem.getId());
                     slimefunItem.callItemHandler(BlockPlaceHandler.class, handler -> handler.onPlayerPlace(placeEvent));
                 }
-                itemStack.subtract();
+                (mainHand ? mainHandItem : offHandItem).subtract();
                 Slimefun.runSync(() -> updateProjection(block), 1L);
                 return;
             }
