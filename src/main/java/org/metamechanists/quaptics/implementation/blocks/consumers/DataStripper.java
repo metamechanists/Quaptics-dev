@@ -45,13 +45,13 @@ import java.util.Optional;
 public class DataStripper extends ConnectedBlock implements InfoPanelBlock, ItemHolderBlock, ProgressBlock, PowerAnimatedBlock {
     public static final Settings DATA_STRIPPER_1_SETTINGS = Settings.builder()
             .tier(Tier.BASIC)
-            .timePerItem(30)
+            .timePerRecipe(30)
             .minPower(15)
             .minFrequency(8)
             .build();
     public static final Settings DATA_STRIPPER_2_SETTINGS = Settings.builder()
             .tier(Tier.INTERMEDIATE)
-            .timePerItem(8)
+            .timePerRecipe(8)
             .minPower(180)
             .minFrequency(100)
             .build();
@@ -158,7 +158,7 @@ public class DataStripper extends ConnectedBlock implements InfoPanelBlock, Item
         }
 
         if (ItemHolderBlock.getStack(location, "item").isPresent()) {
-            ProgressBlock.updateProgress(location, QuapticTicker.INTERVAL_TICKS_10, settings.getTimePerItem());
+            ProgressBlock.updateProgress(location, QuapticTicker.INTERVAL_TICKS_10, settings.getTimePerRecipe());
         }
 
         updatePanel(group);
@@ -182,7 +182,7 @@ public class DataStripper extends ConnectedBlock implements InfoPanelBlock, Item
     public Optional<ItemStack> onRemove(@NotNull final Location location, @NotNull final String name, @NotNull final ItemStack stack) {
         final double progress = ProgressBlock.getProgress(location);
         ProgressBlock.setProgress(location, 0);
-        return Math.abs(progress - settings.getTimePerItem()) < MAX_PROGRESS_DIFFERENCE
+        return Math.abs(progress - settings.getTimePerRecipe()) < MAX_PROGRESS_DIFFERENCE
                 ? Optional.of(stripData(stack))
                 : Optional.of(stack);
 

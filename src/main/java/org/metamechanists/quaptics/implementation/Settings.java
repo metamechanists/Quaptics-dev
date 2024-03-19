@@ -45,7 +45,7 @@ public class Settings {
     private int connections;
 
     private double useInterval;
-    private double timePerItem;
+    private double timePerRecipe;
     private int timeToMaxEfficiency;
     private float projectileSpeed;
     private int range;

@@ -25,7 +25,7 @@ import java.util.Map.Entry;
 public class IndustrialCrystalRefiner extends CrystalRefiner {
     public static final Settings INDUSTRIAL_CRYSTAL_REFINER_SETTINGS = Settings.builder()
             .tier(Tier.ADVANCED)
-            .timePerItem(10)
+            .timePerRecipe(10)
             .minPower(1200)
             .minFrequency(260)
             .build();

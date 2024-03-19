@@ -31,7 +31,7 @@ public interface ProgressBlock {
         }
 
         final double progress = getProgress(location.get());
-        final double maxTime = group.getBlock().getSettings().getTimePerItem();
+        final double maxTime = group.getBlock().getSettings().getTimePerRecipe();
         return Lore.progressBar(progress, maxTime, "&6", "&8", "&a");
     }
 }

@@ -45,7 +45,7 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
     public static final Settings INFUSION_CONTAINER_SETTINGS = Settings.builder()
             .tier(Tier.BASIC)
             .operatingPowerHidden(true)
-            .timePerItem(5)
+            .timePerRecipe(5)
             .build();
     public static final SlimefunItemStack INFUSION_CONTAINER = new SlimefunItemStack(
             "QP_INFUSION_CONTAINER",
@@ -158,7 +158,7 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
         tickProcessing(location, QuapticTicker.INTERVAL_TICKS_2);
         tickAnimation(location, secondsSinceCraftStarted);
 
-        if (secondsSinceCraftStarted >= settings.getTimePerItem()) {
+        if (secondsSinceCraftStarted >= settings.getTimePerRecipe()) {
             completeProcessing(location);
         }
     }

@@ -34,7 +34,7 @@ public class IndustrialInfusionContainer extends InfusionContainer {
     public static final Settings INDUSTRIAL_INFUSION_CONTAINER_SETTINGS = Settings.builder()
             .tier(Tier.INTERMEDIATE)
             .operatingPowerHidden(true)
-            .timePerItem(15)
+            .timePerRecipe(15)
             .build();
     public static final SlimefunItemStack INDUSTRIAL_INFUSION_CONTAINER = new SlimefunItemStack(
             "QP_INDUSTRIAL_INFUSION_CONTAINER",

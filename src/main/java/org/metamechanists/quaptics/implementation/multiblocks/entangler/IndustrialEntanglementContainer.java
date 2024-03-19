@@ -33,7 +33,7 @@ import static org.metamechanists.quaptics.implementation.multiblocks.entangler.I
 public class IndustrialEntanglementContainer extends EntanglementContainer {
     public static final Settings INDUSTRIAL_ENTANGLEMENT_CONTAINER_SETTINGS = Settings.builder()
             .tier(Tier.ADVANCED)
-            .timePerItem(15)
+            .timePerRecipe(15)
             .build();
     public static final SlimefunItemStack INDUSTRIAL_ENTANGLEMENT_CONTAINER = new SlimefunItemStack(
             "QP_INDUSTRIAL_ENTANGLEMENT_CONTAINER",

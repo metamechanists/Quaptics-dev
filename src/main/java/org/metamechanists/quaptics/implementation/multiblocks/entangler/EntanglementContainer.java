@@ -44,7 +44,7 @@ import static org.metamechanists.quaptics.items.groups.CraftingComponents.*;
 public class EntanglementContainer extends ConnectedBlock implements ItemHolderBlock, ComplexMultiblock, ItemProcessor {
     public static final Settings ENTANGLEMENT_CONTAINER_SETTINGS = Settings.builder()
             .tier(Tier.INTERMEDIATE)
-            .timePerItem(5)
+            .timePerRecipe(5)
             .build();
     public static final SlimefunItemStack ENTANGLEMENT_CONTAINER = new SlimefunItemStack(
             "QP_ENTANGLEMENT_CONTAINER",
@@ -63,7 +63,7 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
             new Vector(0, 0, 3), ENTANGLEMENT_MAGNET,
             new Vector(0, 0, -3), ENTANGLEMENT_MAGNET);
 
-    private final double magnetParticleAnimationLengthSeconds = settings.getTimePerItem();
+    private final double magnetParticleAnimationLengthSeconds = settings.getTimePerRecipe();
 
     public EntanglementContainer(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
@@ -196,7 +196,7 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
         tickProcessing(location, QuapticTicker.INTERVAL_TICKS_2);
         tickAnimation(location, secondsSinceCraftStarted);
 
-        if (secondsSinceCraftStarted >= settings.getTimePerItem()) {
+        if (secondsSinceCraftStarted >= settings.getTimePerRecipe()) {
             completeProcessing(location);
             animateCenterCompleted(location);
         }

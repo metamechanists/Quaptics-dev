@@ -43,7 +43,7 @@ import java.util.Optional;
 public class CrystalRefiner extends ConnectedBlock implements ItemHolderBlock, PowerAnimatedBlock, ItemProcessor {
     public static final Settings CRYSTAL_REFINER_SETTINGS = Settings.builder()
             .tier(Tier.INTERMEDIATE)
-            .timePerItem(3)
+            .timePerRecipe(3)
             .minPower(300)
             .minFrequency(30)
             .build();
@@ -150,7 +150,7 @@ public class CrystalRefiner extends ConnectedBlock implements ItemHolderBlock, P
         tickProcessing(location, QuapticTicker.INTERVAL_TICKS_2);
         tickAnimation(location);
 
-        if (secondsSinceCraftStarted >= settings.getTimePerItem()) {
+        if (secondsSinceCraftStarted >= settings.getTimePerRecipe()) {
             completeProcessing(location);
         }
     }

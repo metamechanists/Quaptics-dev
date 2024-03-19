@@ -131,8 +131,8 @@ public class Lore {
         if (settings.getUseInterval() != 0) {
             lore.add(useInterval(settings.getUseInterval() / QuapticTicker.TICKS_PER_SECOND));
         }
-        if (settings.getTimePerItem() != 0) {
-            lore.add(timePerItem(settings.getTimePerItem()));
+        if (settings.getTimePerRecipe() != 0) {
+            lore.add(timePerRecipe(settings.getTimePerRecipe()));
         }
         if (settings.getTimeToMaxEfficiency() != 0) {
             lore.add(timeToMaxEfficiency(settings.getTimeToMaxEfficiency() / 60.0));
@@ -192,8 +192,8 @@ public class Lore {
     public String useInterval(final double useInterval) {
         return ATTRIBUTE_SYMBOL + SPEED_SYMBOL + "&7Use Interval &e" + formatOneDp(useInterval) + SECONDS_SUFFIX;
     }
-    public String timePerItem(final double timePerItem) {
-        return ATTRIBUTE_SYMBOL + SPEED_SYMBOL + "&7Time per item &e" + formatOneDp(timePerItem) + SECONDS_SUFFIX;
+    public String timePerRecipe(final double timePerRecipe) {
+        return ATTRIBUTE_SYMBOL + SPEED_SYMBOL + "&7Time per recipe &e" + formatOneDp(timePerRecipe) + SECONDS_SUFFIX;
     }
     public String timeToMaxEfficiency(final double timeToMaxEfficiency) {
         return ATTRIBUTE_SYMBOL + SPEED_SYMBOL + "&7Time to max efficiency &e" + formatZeroDp(timeToMaxEfficiency) + MINUTES_SUFFIX;
