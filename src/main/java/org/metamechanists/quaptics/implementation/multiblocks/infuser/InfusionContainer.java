@@ -114,7 +114,7 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
         return new ArrayList<>();
     }
     @Override
-    protected void initBlockStorage(final @NotNull Location location) {
+    protected void initBlockStorage(final @NotNull Location location, @NotNull final Player player) {
         BlockStorageAPI.set(location, Keys.BS_CRAFT_IN_PROGRESS, false);
         BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_CRAFT_STARTED, 0.0);
     }

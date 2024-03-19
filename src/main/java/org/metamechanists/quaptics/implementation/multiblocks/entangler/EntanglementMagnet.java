@@ -82,7 +82,7 @@ public class EntanglementMagnet extends ConnectedBlock implements PowerAnimatedB
         return List.of(new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, inputPointLocation)));
     }
     @Override
-    protected void initBlockStorage(final @NotNull Location location) {
+    protected void initBlockStorage(final @NotNull Location location, @NotNull final Player player) {
         BlockStorageAPI.set(location, Keys.BS_POWERED, false);
     }
 

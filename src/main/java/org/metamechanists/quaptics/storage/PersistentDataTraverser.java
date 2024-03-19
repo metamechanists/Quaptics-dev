@@ -35,6 +35,7 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -62,6 +63,13 @@ public class PersistentDataTraverser {
 
     private static @NotNull NamespacedKey getKey(@NotNull final String key) {
         return keys.computeIfAbsent(key, k -> new NamespacedKey(Quaptics.getInstance(), key));
+    }
+
+    public void remove(@NotNull final String key) {
+        PersistentDataAPI.remove(persistentDataHolder, getKey(key));
+    }
+    public void removeIf(@NotNull final Predicate<String> predicate) {
+        keys.keySet().stream().filter(predicate).forEach(this::remove);
     }
 
     public void set(@NotNull final String key, final int value) {

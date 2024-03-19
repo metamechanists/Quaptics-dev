@@ -37,28 +37,28 @@ public class EnergyConcentrator extends EnergyConnectedBlock implements PowerAni
             .tier(Tier.BASIC)
             .operatingPowerHidden(true)
             .outputPower(30)
-            .energyConsumption(120)
+            .energyConsumption(60)
             .energyCapacity(240)
             .build();
     public static final Settings ENERGY_CONCENTRATOR_2_SETTINGS = Settings.builder()
             .tier(Tier.BASIC)
             .operatingPowerHidden(true)
             .outputPower(70)
-            .energyConsumption(200)
+            .energyConsumption(100)
             .energyCapacity(400)
             .build();
     public static final Settings ENERGY_CONCENTRATOR_3_SETTINGS = Settings.builder()
             .tier(Tier.INTERMEDIATE)
             .operatingPowerHidden(true)
             .outputPower(400)
-            .energyConsumption(580)
+            .energyConsumption(290)
             .energyCapacity(1160)
             .build();
     public static final Settings ENERGY_CONCENTRATOR_4_SETTINGS = Settings.builder()
             .tier(Tier.INTERMEDIATE)
             .operatingPowerHidden(true)
             .outputPower(800)
-            .energyConsumption(950)
+            .energyConsumption(475)
             .energyCapacity(1900)
             .build();
 

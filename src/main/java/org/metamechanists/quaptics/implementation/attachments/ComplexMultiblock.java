@@ -94,6 +94,7 @@ public interface ComplexMultiblock {
     }
 
     default void multiblockInteract(final Block center, final Player player, final ItemStack itemStack) {
+        MultiblockWand.updateLore(itemStack);
         if (isStructureValid(center)) {
             Language.sendLanguageMessage(player, "multiblock.valid");
             return;

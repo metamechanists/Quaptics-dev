@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
-import org.metamechanists.quaptics.implementation.blocks.consumers.ItemProjector;
+import org.metamechanists.quaptics.implementation.blocks.concentrators.CreativeConcentrator;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.panels.config.ConfigPanel;
 import org.metamechanists.quaptics.panels.config.ConfigPanelBuilder;
@@ -21,6 +21,7 @@ import java.util.Optional;
 
 public class CreativeConcentratorConfigPanel extends ConfigPanel {
 
+
     public CreativeConcentratorConfigPanel(@NotNull final Location location, final ConnectionGroupId groupId, final float rotationY) {
         super(groupId, location, rotationY);
     }
@@ -32,9 +33,10 @@ public class CreativeConcentratorConfigPanel extends ConfigPanel {
     @Override
     protected ConfigPanelContainer buildPanelContainer(@NotNull final ConnectionGroupId groupId, @NotNull final Location location, final float rotationY) {
         return new ConfigPanelBuilder(groupId, location.clone().add(getOffset()), SIZE, rotationY)
-                .addAttribute("power", Lore.POWER_SYMBOL + "&fPower")
-                .addAttribute("frequency", Lore.FREQUENCY_SYMBOL + "&fFrequency")
+                .addAttribute("points", Lore.COUNT_SYMBOL + "&fPoints")
                 .addAttribute("phase", Lore.PHASE_SYMBOL + "&fPhase")
+                .addAttribute("frequency", Lore.FREQUENCY_SYMBOL + "&fFrequency")
+                .addAttribute("power", Lore.POWER_SYMBOL + "&fPower")
                 .build();
     }
 
@@ -61,7 +63,14 @@ public class CreativeConcentratorConfigPanel extends ConfigPanel {
             BlockStorageAPI.set(location, Keys.BS_OUTPUT_PHASE, phase);
         }
 
-        ItemProjector.onConfigUpdated(location);
+        if ("points".equals(name)) {
+            int points = BlockStorageAPI.getInt(location, Keys.BS_POINTS);
+            points += "add".equals(type) ? 1 : -1;
+            points = Utils.clampToRange(points, 1, CreativeConcentrator.MAX_POINTS);
+            BlockStorageAPI.set(location, Keys.BS_POINTS, points);
+        }
+
+        CreativeConcentrator.onConfigUpdated(location);
         update();
     }
 
@@ -84,10 +93,12 @@ public class CreativeConcentratorConfigPanel extends ConfigPanel {
         final double power = BlockStorageAPI.getDouble(location.get(), Keys.BS_OUTPUT_POWER);
         final double frequency = BlockStorageAPI.getDouble(location.get(), Keys.BS_OUTPUT_FREQUENCY);
         final int phase = BlockStorageAPI.getInt(location.get(), Keys.BS_OUTPUT_PHASE);
+        final int points = BlockStorageAPI.getInt(location.get(), Keys.BS_POINTS);
 
         container.setValue("power", Objects.toString(power));
         container.setValue("frequency", Objects.toString(frequency));
         container.setValue("phase", Objects.toString(phase));
+        container.setValue("points", Objects.toString(points));
     }
 
     @SuppressWarnings("MagicNumber")

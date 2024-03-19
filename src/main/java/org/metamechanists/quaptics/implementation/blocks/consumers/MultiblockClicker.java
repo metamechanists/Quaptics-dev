@@ -96,7 +96,6 @@ public class MultiblockClicker extends ConnectedBlock implements PowerAnimatedBl
     }
     @Override
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
-        BlockStorageAPI.set(location, Keys.BS_FACING, player.getFacing());
         return new ModelBuilder()
                 .add("main", new ModelCuboid()
                         .material(Material.CYAN_CONCRETE)
@@ -114,9 +113,10 @@ public class MultiblockClicker extends ConnectedBlock implements PowerAnimatedBl
                 formatPointLocation(player, location, inputPointLocation)));
     }
     @Override
-    protected void initBlockStorage(@NotNull final Location location) {
+    protected void initBlockStorage(@NotNull final Location location, @NotNull final Player player) {
         BlockStorageAPI.set(location, Keys.BS_TICKS_SINCE_LAST_UPDATE, 0);
         BlockStorageAPI.set(location, Keys.BS_POWERED, false);
+        BlockStorageAPI.set(location, Keys.BS_FACING, player.getFacing());
     }
 
     @Override

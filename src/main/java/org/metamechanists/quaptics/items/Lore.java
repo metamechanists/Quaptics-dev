@@ -153,7 +153,7 @@ public class Lore {
             lore.add(powerEfficiency(settings.getPowerEfficiency()));
         }
         if (settings.getEnergyConsumption() != 0) {
-            lore.add(LoreBuilder.powerPerSecond(settings.getEnergyConsumption()));
+            lore.add(LoreBuilder.powerPerSecond(settings.getEnergyConsumption() * 2));
         }
 
         return lore;

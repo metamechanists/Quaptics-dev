@@ -52,6 +52,19 @@ public class ConnectionGroup {
     public Optional<ConnectionPoint> getPoint(final String name) {
         return points.get(name).get();
     }
+    public ConnectionPoint addPoint(@NotNull final ConnectionPoint point) {
+        points.put(point.getName(), point.getId());
+        saveData();
+        return point;
+    }
+    public Optional<ConnectionPoint> removePoint(@NotNull final ConnectionPoint point) {
+        return removePoint(point.getName());
+    }
+    public Optional<ConnectionPoint> removePoint(@NotNull final String name) {
+        ConnectionPointId point = points.remove(name);
+        saveData();
+        return point == null ? Optional.empty() : point.get();
+    }
     public ConnectedBlock getBlock() {
         return Groups.getBlocks().get(blockId);
     }

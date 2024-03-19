@@ -115,7 +115,7 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
                 new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output 4", location.clone().toCenterLocation().add(outputPoint4Location)));
     }
     @Override
-    protected void initBlockStorage(final @NotNull Location location) {
+    protected void initBlockStorage(final @NotNull Location location, @NotNull final Player player) {
         BlockStorageAPI.set(location, Keys.BS_SECONDS_SINCE_REACTOR_STARTED, 0.0);
         BlockStorageAPI.set(location, Keys.BS_OUTPUT_POWER, 0.0);
         BlockStorageAPI.set(location, Keys.BS_ANIMATION_OFFSET, 0.0);

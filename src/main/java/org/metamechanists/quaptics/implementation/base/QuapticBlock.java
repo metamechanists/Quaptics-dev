@@ -61,11 +61,12 @@ public abstract class QuapticBlock extends SlimefunItem {
                 new BlockPlaceHandler(false) {
                     @Override
                     public void onPlayerPlace(@Nonnull final BlockPlaceEvent event) {
+                        final Player player = event.getPlayer();
                         final Location location = event.getBlock().getLocation();
-                        final DisplayGroup displayGroup = initModel(location, event.getPlayer());
+                        final DisplayGroup displayGroup = initModel(location, player);
                         setId(displayGroup, location);
                         event.getBlock().setType(getBaseMaterial());
-                        initBlockStorage(location);
+                        initBlockStorage(location, player);
                         onPlace(event);
                     }
                 },
@@ -97,7 +98,7 @@ public abstract class QuapticBlock extends SlimefunItem {
 
     @ParametersAreNonnullByDefault
     protected abstract org.metamechanists.displaymodellib.sefilib.entity.display.DisplayGroup initModel(Location location, Player player);
-    protected void initBlockStorage(@NotNull final Location location) {}
+    protected void initBlockStorage(@NotNull final Location location, @NotNull Player player) {}
 
     protected void onPlace(@NotNull final BlockPlaceEvent event) {}
     protected void onBreak(@NotNull final Location location) {}
@@ -154,12 +155,16 @@ public abstract class QuapticBlock extends SlimefunItem {
     protected Material getBaseMaterial() {
         return Material.STRUCTURE_VOID;
     }
-    private static @NotNull Vector rotateVectorByEyeDirection(@NotNull final Player player, @NotNull final Vector vector) {
-        final double rotationAngle = TransformationUtils.yawToCardinalDirection(player.getEyeLocation().getYaw());
+    private static @NotNull Vector rotateVectorByYaw(final float yaw, @NotNull final Vector vector) {
+        final double rotationAngle = TransformationUtils.yawToCardinalDirection(yaw);
         return vector.clone().rotateAroundY(rotationAngle);
     }
-    protected static @NotNull Location formatPointLocation(final Player player, @NotNull final Location location, final Vector relativeLocation) {
-        final Vector newRelativeLocation = rotateVectorByEyeDirection(player, relativeLocation);
+    protected static @NotNull Location formatPointLocation(@NotNull final Player player, @NotNull final Location location, @NotNull final Vector relativeLocation) {
+        final Vector newRelativeLocation = rotateVectorByYaw(player.getEyeLocation().getYaw(), relativeLocation);
+        return location.toCenterLocation().clone().add(newRelativeLocation);
+    }
+    protected static @NotNull Location formatPointLocation(final float yaw, @NotNull final Location location, @NotNull final Vector relativeLocation) {
+        final Vector newRelativeLocation = rotateVectorByYaw(yaw, relativeLocation);
         return location.toCenterLocation().clone().add(newRelativeLocation);
     }
 

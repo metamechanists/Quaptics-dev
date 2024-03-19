@@ -101,7 +101,7 @@ public class ItemProjector extends ConnectedBlock implements ItemHolderBlock, Po
         return List.of(new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, inputPointLocation)));
     }
     @Override
-    protected void initBlockStorage(@NotNull final Location location) {
+    protected void initBlockStorage(@NotNull final Location location, @NotNull final Player player) {
         BlockStorageAPI.set(location, Keys.BS_HEIGHT, 0);
         BlockStorageAPI.set(location, Keys.BS_SIZE, ITEM_DISPLAY_ADDITIONAL_SIZE.x);
         BlockStorageAPI.set(location, Keys.BS_MODE, 0);

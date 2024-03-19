@@ -55,6 +55,7 @@ public class Keys {
     public final String BS_OUTPUT_POWER = "QP_OUTPUT_POWER";
     public final String BS_OUTPUT_FREQUENCY = "QP_OUTPUT_FREQUENCY";
     public final String BS_OUTPUT_PHASE = "QP_OUTPUT_PHASE";
+    public static final String BS_POINTS = "POINTS";
     public final String BS_ANIMATION_OFFSET = "QP_ANIMATION_OFFSET";
     public final String BS_INTERACTION_ID_LIST = "QP_INTERACTION_ID_LIST";
     public final String BS_PLAYER_RECEIVERS = "QP_PLAYER_RECEIVERS";

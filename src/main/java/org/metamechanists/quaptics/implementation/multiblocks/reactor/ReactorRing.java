@@ -125,7 +125,7 @@ public class ReactorRing extends ConnectedBlock {
                         location.clone().toCenterLocation().add(controllerDirection.clone().multiply(-getConnectionRadius()))));
     }
     @Override
-    protected void initBlockStorage(final @NotNull Location location) {
+    protected void initBlockStorage(final @NotNull Location location, @NotNull final Player player) {
         BlockStorageAPI.set(location, Keys.BS_INPUT_POWER, 0.0);
     }
 

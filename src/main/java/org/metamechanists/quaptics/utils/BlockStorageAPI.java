@@ -54,6 +54,9 @@ public class BlockStorageAPI {
     public void set(final Location location, final String key, final double value) {
         set(location, key, Objects.toString(value));
     }
+    public void set(final Location location, final String key, final float value) {
+        set(location, key, Objects.toString(value));
+    }
     public void set(final Location location, final String key, final BlockFace face) {
         set(location, key, Objects.toString(face));
     }
@@ -97,6 +100,11 @@ public class BlockStorageAPI {
     public double getDouble(final Location location, final String key) {
         return hasData(location, key)
                 ? Double.parseDouble(getString(location, key))
+                : 0;
+    }
+    public float getFloat(final Location location, final String key) {
+        return hasData(location, key)
+                ? Float.parseFloat(getString(location, key))
                 : 0;
     }
     public Optional<Vector> getVector(final Location location, final String key) {

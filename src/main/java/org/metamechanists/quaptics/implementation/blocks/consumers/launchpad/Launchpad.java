@@ -81,7 +81,7 @@ public class Launchpad extends ConnectedBlock implements ConfigPanelBlock, Power
         return List.of(new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, inputPointLocation)));
     }
     @Override
-    protected void initBlockStorage(@NotNull final Location location) {
+    protected void initBlockStorage(@NotNull final Location location, @NotNull final Player player) {
         BlockStorageAPI.set(location, Keys.BS_VELOCITY, INITIAL_VELOCITY);
     }
 

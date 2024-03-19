@@ -8,6 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
 
 import java.util.List;
@@ -28,6 +29,22 @@ public class MultiblockWand extends SlimefunItem {
         super(itemGroup, item, recipeType, recipe);
     }
 
+    // Updates the lore of the item (it changed between versions)
+    // TODO: Remove this later
+    public static void updateLore(final ItemStack itemStack) {
+        if (!(SlimefunItem.getByItem(itemStack) instanceof MultiblockWand multiblockWand)) {
+            return;
+        }
+
+        final ItemMeta itemMeta = itemStack.getItemMeta();
+        if (itemMeta == null) {
+            return;
+        }
+
+        itemMeta.lore(multiblockWand.getItem().lore());
+        itemStack.setItemMeta(itemMeta);
+    }
+
     public static void removeProjection(final ItemStack itemStack) {
         final PersistentDataTraverser traverser = new PersistentDataTraverser(itemStack);
         final List<UUID> uuids = traverser.getUuidList("uuids");
@@ -35,6 +52,8 @@ public class MultiblockWand extends SlimefunItem {
             return;
         }
 
+        traverser.removeIf(key -> key.contains("uuids"));
+        traverser.save(itemStack);
         uuids.stream()
                 .map(Bukkit::getEntity)
                 .filter(Objects::nonNull)

@@ -115,7 +115,7 @@ public class DataStripper extends ConnectedBlock implements InfoPanelBlock, Item
         return List.of(new ConnectionPoint(ConnectionPointType.INPUT, groupId, "input", formatPointLocation(player, location, inputPointLocation)));
     }
     @Override
-    protected void initBlockStorage(@NotNull final Location location) {
+    protected void initBlockStorage(@NotNull final Location location, @NotNull final Player player) {
         ProgressBlock.setProgress(location, 0);
     }
 

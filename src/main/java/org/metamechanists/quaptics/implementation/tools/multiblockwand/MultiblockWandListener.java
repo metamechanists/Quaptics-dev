@@ -61,6 +61,7 @@ public class MultiblockWandListener implements Listener {
                     BlockStorage.store(block, slimefunItem.getId());
                     slimefunItem.callItemHandler(BlockPlaceHandler.class, handler -> handler.onPlayerPlace(placeEvent));
                 }
+                itemStack.subtract();
                 Slimefun.runSync(() -> updateProjection(block), 1L);
                 return;
             }

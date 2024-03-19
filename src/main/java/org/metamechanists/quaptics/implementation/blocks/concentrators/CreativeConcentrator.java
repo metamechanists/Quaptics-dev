@@ -35,8 +35,8 @@ import org.metamechanists.quaptics.utils.id.complex.ConfigPanelId;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class CreativeConcentrator extends ConnectedBlock implements ConfigPanelBlock {
     public static final SlimefunItemStack CREATIVE_CONCENTRATOR = new SlimefunItemStack(
@@ -50,10 +50,13 @@ public class CreativeConcentrator extends ConnectedBlock implements ConfigPanelB
             Lore.ATTRIBUTE_SYMBOL + Lore.FREQUENCY_SYMBOL + "&7Max Frequency Output &e∞" + Lore.FREQUENCY_SUFFIX,
             Lore.ATTRIBUTE_SYMBOL + Lore.PHASE_SYMBOL + "&7Max Phase Output &e∞" + Lore.PHASE_SUFFIX
     );
+    public static final float RADIUS = 0.55F;
+    public static final int MAX_POINTS = (int) ((2 * Math.PI * RADIUS) / 0.25F);
+    public static final float STARTING_ANGLE = (float) (2F * Math.PI / (float) MAX_POINTS);
 
-    private static final Vector RELATIVE_PANEL_LOCATION = new Vector(0, 0, -0.51);
+    private static final Vector RELATIVE_PANEL_LOCATION = new Vector(0, 0.15, -0.6);
 
-    private final Vector outputLocation = new Vector(0.0F, 0.0F, getConnectionRadius());
+    private static final Vector OUTPUT_STARTING_LOCATION = new Vector(0.0F, 0.0F, RADIUS);
 
     public CreativeConcentrator(final ItemGroup itemGroup, final SlimefunItemStack item) {
         super(itemGroup, item, RecipeType.NULL, new ItemStack[0], Settings.builder().build());
@@ -61,7 +64,7 @@ public class CreativeConcentrator extends ConnectedBlock implements ConfigPanelB
 
     @Override
     protected float getConnectionRadius() {
-        return 0.55F;
+        return RADIUS;
     }
     @Override
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
@@ -91,13 +94,15 @@ public class CreativeConcentrator extends ConnectedBlock implements ConfigPanelB
     }
     @Override
     protected List<ConnectionPoint> initConnectionPoints(final ConnectionGroupId groupId, final Player player, final Location location) {
-        return List.of(new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output", formatPointLocation(player, location, outputLocation)));
+        return List.of(new ConnectionPoint(ConnectionPointType.OUTPUT, groupId, "output 1", formatPointLocation(player, location, OUTPUT_STARTING_LOCATION)));
     }
     @Override
-    protected void initBlockStorage(@NotNull final Location location) {
+    protected void initBlockStorage(@NotNull final Location location, @NotNull final Player player) {
         BlockStorageAPI.set(location, Keys.BS_OUTPUT_POWER, 0);
         BlockStorageAPI.set(location, Keys.BS_OUTPUT_FREQUENCY, 0);
         BlockStorageAPI.set(location, Keys.BS_OUTPUT_PHASE, 0);
+        BlockStorageAPI.set(location, Keys.BS_POINTS, 1);
+        BlockStorageAPI.set(location, Keys.BS_FACING, player.getEyeLocation().getYaw());
     }
 
     @Override
@@ -118,12 +123,44 @@ public class CreativeConcentrator extends ConnectedBlock implements ConfigPanelB
         super.onSlimefunTick(block, item, data);
         final Location location = block.getLocation();
 
-        final Optional<Link> linkOptional = getLink(location, "output");
-        linkOptional.ifPresent(link -> {
+
+        final List<Link> outgoingLinks = getOutgoingLinks(location);
+        outgoingLinks.forEach(link -> {
             final double power = BlockStorageAPI.getDouble(location, Keys.BS_OUTPUT_POWER);
             final double frequency = BlockStorageAPI.getDouble(location, Keys.BS_OUTPUT_FREQUENCY);
             final int phase = BlockStorageAPI.getInt(location, Keys.BS_OUTPUT_PHASE);
             link.setPowerFrequencyPhase(power, frequency, phase);
         });
+    }
+
+    public static void onConfigUpdated(final Location location) {
+        getGroup(location).ifPresent(group -> {
+            final float yaw = BlockStorageAPI.getFloat(location, Keys.BS_FACING);
+            final List<ConnectionPoint> points = new ArrayList<>(group.getPointList());
+            points.removeIf(point -> !point.isOutput());
+
+            final int pointCount = BlockStorageAPI.getInt(location, Keys.BS_POINTS);
+            for (int i = 0; i < points.size(); i++) {
+                if (i >= pointCount) {
+                    group.removePoint(points.get(i)).ifPresent(ConnectionPoint::remove);
+                }
+            }
+
+            for (int i = 0; i < pointCount; i++) {
+                final Location pointLocation = formatPointLocation(yaw, location, getRelativeOutputLocation(i));
+                final ConnectionPoint point = points.size() > i ? points.get(i) : new ConnectionPoint(ConnectionPointType.OUTPUT, group.getId(), "output " + i, pointLocation);
+                if (points.size() > i && point.getLink().isEmpty()) {
+                    point.changeLocation(pointLocation);
+                }
+
+                if (points.size() <= i) {
+                    group.addPoint(point);
+                }
+            }
+        });
+    }
+
+    public static Vector getRelativeOutputLocation(final int i) {
+        return OUTPUT_STARTING_LOCATION.clone().rotateAroundY(STARTING_ANGLE * i);
     }
 }
