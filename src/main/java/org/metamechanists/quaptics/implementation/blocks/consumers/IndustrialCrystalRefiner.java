@@ -33,7 +33,7 @@ public class IndustrialCrystalRefiner extends CrystalRefiner {
             "QP_INDUSTRIAL_CRYSTAL_REFINER",
             Material.QUARTZ_BLOCK,
             "&bIndustrial Crystal Refiner",
-            Lore.create(CRYSTAL_REFINER_SETTINGS,
+            Lore.create(INDUSTRIAL_CRYSTAL_REFINER_SETTINGS,
                     "&7● Refines Phase Crystals",
                     "&7● Can refine up to 16 items at once",
                     "&7● &eRight Click &7with an item to start refining"));
