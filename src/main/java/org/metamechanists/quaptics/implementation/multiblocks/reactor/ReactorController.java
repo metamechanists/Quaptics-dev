@@ -83,7 +83,7 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
     }
 
     @Override
-    protected float getConnectionRadius() {
+    public float getConnectionRadius() {
         return 0.7F;
     }
     @Override

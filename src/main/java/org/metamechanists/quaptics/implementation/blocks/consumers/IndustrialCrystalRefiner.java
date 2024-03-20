@@ -43,7 +43,7 @@ public class IndustrialCrystalRefiner extends CrystalRefiner {
     }
 
     @Override
-    protected float getConnectionRadius() {
+    public float getConnectionRadius() {
         return 1.10F;
     }
     @Override

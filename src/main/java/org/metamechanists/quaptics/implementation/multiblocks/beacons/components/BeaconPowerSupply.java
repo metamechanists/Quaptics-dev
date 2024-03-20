@@ -56,7 +56,7 @@ public class BeaconPowerSupply extends ConnectedBlock {
     }
 
     @Override
-    protected float getConnectionRadius() {
+    public float getConnectionRadius() {
         return 1.0F;
     }
     @Override

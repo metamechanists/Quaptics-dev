@@ -4,12 +4,11 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import org.bukkit.FluidCollisionMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Display;
-import org.bukkit.entity.Interaction;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -21,6 +20,8 @@ import org.metamechanists.quaptics.implementation.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
 import org.metamechanists.displaymodellib.transformations.TransformationUtils;
+
+import java.util.Set;
 
 
 public class DirectRayGun extends AbstractRayGun {
@@ -54,6 +55,8 @@ public class DirectRayGun extends AbstractRayGun {
             Lore.buildChargeableLore(RAY_GUN_4_SETTINGS, 0,
                     "&7● &eRight Click &7to fire"));
 
+    private static final Set<EntityType> BLACKLISTED_TYPES = Set.of(EntityType.INTERACTION, EntityType.ARMOR_STAND, EntityType.BLOCK_DISPLAY, EntityType.ITEM_DISPLAY, EntityType.TEXT_DISPLAY);
+
     public DirectRayGun(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
     }
@@ -63,10 +66,7 @@ public class DirectRayGun extends AbstractRayGun {
         final RayTraceResult result = eyeLocation.getWorld().rayTrace(
                 eyeLocation.clone(), Vector.fromJOML(TransformationUtils.getDisplacement(eyeLocation, target)),
                 settings.getRange(), FluidCollisionMode.NEVER, true, 0.095F,
-                entity -> !entity.getUniqueId().equals(player.getUniqueId())
-                        && !(entity instanceof Display)
-                        && !(entity instanceof Interaction)
-                        && !(entity instanceof ArmorStand));
+                entity -> !entity.getUniqueId().equals(player.getUniqueId()) && !BLACKLISTED_TYPES.contains(entity.getType()));
 
         if (result == null) {
             DeprecatedBeamStorage.deprecate(new LifetimeDirectBeam(settings.getProjectileMaterial(), handLocation, target, 0.095F, 0, 5));
@@ -83,7 +83,7 @@ public class DirectRayGun extends AbstractRayGun {
                 5));
 
         if (result.getHitEntity() instanceof final LivingEntity livingEntity
-                && Slimefun.getProtectionManager().hasPermission(player, livingEntity.getLocation(), io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction.ATTACK_ENTITY)) {
+                && Slimefun.getProtectionManager().hasPermission(player, livingEntity.getLocation(), Interaction.ATTACK_ENTITY)) {
             livingEntity.damage(settings.getDamage());
             livingEntity.setVelocity(Vector.fromJOML(TransformationUtils.getDisplacement(handLocation, livingEntity.getEyeLocation()).mul(0.2F)));
         }

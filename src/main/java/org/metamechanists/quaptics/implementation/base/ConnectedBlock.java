@@ -38,7 +38,7 @@ public abstract class ConnectedBlock extends QuapticBlock {
         super(itemGroup, item, recipeType, recipe, settings);
     }
 
-    protected abstract float getConnectionRadius();
+    public abstract float getConnectionRadius();
     protected abstract List<ConnectionPoint> initConnectionPoints(ConnectionGroupId groupId, Player player, Location location);
 
     protected boolean isTicker() {

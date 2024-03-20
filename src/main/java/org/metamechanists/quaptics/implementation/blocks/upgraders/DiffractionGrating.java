@@ -85,7 +85,7 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
     }
 
     @Override
-    protected float getConnectionRadius() {
+    public float getConnectionRadius() {
         return 0;
     }
     @Override

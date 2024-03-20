@@ -54,7 +54,7 @@ public class ReactorRing extends ConnectedBlock {
     }
 
     @Override
-    protected float getConnectionRadius() {
+    public float getConnectionRadius() {
         return 0.7F;
     }
     @Override

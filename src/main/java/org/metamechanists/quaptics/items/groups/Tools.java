@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.metamechanists.quaptics.Quaptics;
 import org.metamechanists.quaptics.implementation.tools.multiblockwand.MultiblockWand;
+import org.metamechanists.quaptics.implementation.tools.pointwand.PointWand;
 import org.metamechanists.quaptics.implementation.tools.raygun.DirectRayGun;
 import org.metamechanists.quaptics.implementation.tools.raygun.ModulatedRayGun;
 import org.metamechanists.quaptics.implementation.tools.targetingwand.TargetingWand;
@@ -17,6 +18,7 @@ import static io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems.HA
 import static io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems.HOLOGRAM_PROJECTOR;
 import static io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems.POWER_CRYSTAL;
 import static org.metamechanists.quaptics.implementation.tools.multiblockwand.MultiblockWand.MULTIBLOCK_WAND;
+import static org.metamechanists.quaptics.implementation.tools.pointwand.PointWand.POINT_WAND;
 import static org.metamechanists.quaptics.implementation.tools.raygun.DirectRayGun.RAY_GUN_3;
 import static org.metamechanists.quaptics.implementation.tools.raygun.DirectRayGun.RAY_GUN_3_SETTINGS;
 import static org.metamechanists.quaptics.implementation.tools.raygun.DirectRayGun.RAY_GUN_4;
@@ -36,6 +38,12 @@ public class Tools {
 
         new TargetingWand(Groups.TOOLS, TARGETING_WAND, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
                 null, null, new ItemStack(Material.LAPIS_BLOCK),
+                null, new ItemStack(Material.STICK), null,
+                new ItemStack(Material.STICK), null, null
+        }).register(addon);
+
+        new PointWand(Groups.TOOLS, POINT_WAND, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+                null, null, TRANSMITTER_3,
                 null, new ItemStack(Material.STICK), null,
                 new ItemStack(Material.STICK), null, null
         }).register(addon);

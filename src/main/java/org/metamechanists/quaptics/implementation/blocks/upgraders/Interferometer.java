@@ -54,7 +54,7 @@ public class Interferometer extends ConnectedBlock implements PowerAnimatedBlock
     }
 
     @Override
-    protected float getConnectionRadius() {
+    public float getConnectionRadius() {
         return 0.0F;
     }
     @Override

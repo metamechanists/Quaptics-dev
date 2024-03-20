@@ -94,7 +94,7 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
     }
 
     @Override
-    protected float getConnectionRadius() {
+    public float getConnectionRadius() {
         return 0.60F;
     }
     @Override

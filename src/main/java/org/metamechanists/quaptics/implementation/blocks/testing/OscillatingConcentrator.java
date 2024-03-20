@@ -46,7 +46,7 @@ public class OscillatingConcentrator extends ConnectedBlock {
     }
 
     @Override
-    protected float getConnectionRadius() {
+    public float getConnectionRadius() {
         return 0.45F;
     }
     @Override

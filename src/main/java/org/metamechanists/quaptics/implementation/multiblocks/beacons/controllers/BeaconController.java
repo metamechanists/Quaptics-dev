@@ -59,7 +59,7 @@ public abstract class BeaconController extends ConnectedBlock implements ItemHol
     }
 
     @Override
-    protected float getConnectionRadius() {
+    public float getConnectionRadius() {
         return 0;
     }
     @Override

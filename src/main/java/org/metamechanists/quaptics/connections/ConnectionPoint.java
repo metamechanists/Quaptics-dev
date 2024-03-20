@@ -23,12 +23,12 @@ import org.metamechanists.quaptics.utils.id.complex.LinkId;
 import org.metamechanists.quaptics.utils.id.simple.BlockDisplayId;
 import org.metamechanists.quaptics.utils.id.simple.InteractionId;
 
+import java.util.Objects;
 import java.util.Optional;
 
 public class ConnectionPoint {
     private static final float SIZE = 0.1F;
     private static final Vector3f INTERACTION_OFFSET = new Vector3f(0.0F, -SIZE / 2, 0.0F);
-    private static final Color SELECTED_COLOR = Color.fromRGB(0, 255, 0);
     private static final ModelCuboid BLOCK_DISPLAY = new ModelCuboid()
             .brightness(Utils.BRIGHTNESS_OFF)
             .size(SIZE);
@@ -146,13 +146,23 @@ public class ConnectionPoint {
         updatePanel();
     }
 
-    public void select() {
-        getBlockDisplay().ifPresent(blockDisplay -> {
-            blockDisplay.setGlowing(true);
-            blockDisplay.setGlowColorOverride(SELECTED_COLOR);
-        });
+    public void glowColor(Color color) {
+        getBlockDisplay().ifPresent(blockDisplay -> blockDisplay.setGlowColorOverride(color));
+        glow();
     }
-    public void deselect() {
+    public void glow() {
+        getBlockDisplay().ifPresent(blockDisplay -> blockDisplay.setGlowing(true));
+    }
+    public boolean isGlowing() {
+        return getBlockDisplay().map(BlockDisplay::isGlowing).orElse(false);
+    }
+    public boolean isGlowing(Color color) {
+        return getBlockDisplay().map(blockDisplay ->
+                blockDisplay.isGlowing()
+                && Objects.equals(blockDisplay.getGlowColorOverride(), color)
+        ).orElse(false);
+    }
+    public void stopGlow() {
         getBlockDisplay().ifPresent(blockDisplay -> blockDisplay.setGlowing(false));
     }
 }

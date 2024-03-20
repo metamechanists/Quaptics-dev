@@ -62,7 +62,7 @@ public class CrystalRefiner extends ConnectedBlock implements ItemHolderBlock, P
     }
 
     @Override
-    protected float getConnectionRadius() {
+    public float getConnectionRadius() {
         return 0.90F;
     }
     @Override

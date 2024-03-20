@@ -72,7 +72,7 @@ public class InfusionContainer extends ConnectedBlock implements ItemHolderBlock
     }
 
     @Override
-    protected float getConnectionRadius() {
+    public float getConnectionRadius() {
         return 0.0F;
     }
     @Override

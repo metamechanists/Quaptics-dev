@@ -80,7 +80,7 @@ public class DataStripper extends ConnectedBlock implements InfoPanelBlock, Item
     }
 
     @Override
-    protected float getConnectionRadius() {
+    public float getConnectionRadius() {
         return 0.40F;
     }
     @Override

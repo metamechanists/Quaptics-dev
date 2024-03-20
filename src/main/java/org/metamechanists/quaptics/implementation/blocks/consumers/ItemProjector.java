@@ -74,7 +74,7 @@ public class ItemProjector extends ConnectedBlock implements ItemHolderBlock, Po
     }
 
     @Override
-    protected float getConnectionRadius() {
+    public float getConnectionRadius() {
         return 0.7F;
     }
     @Override

@@ -39,7 +39,7 @@ public class IndustrialEntanglementMagnet extends EntanglementMagnet {
     }
 
     @Override
-    protected float getConnectionRadius() {
+    public float getConnectionRadius() {
         return 0.6F;
     }
     @Override

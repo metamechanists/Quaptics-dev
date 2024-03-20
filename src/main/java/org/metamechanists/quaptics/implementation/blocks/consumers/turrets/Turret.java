@@ -47,7 +47,7 @@ public abstract class Turret extends ConnectedBlock implements PowerAnimatedBloc
     }
 
     @Override
-    protected float getConnectionRadius() {
+    public float getConnectionRadius() {
         return 0.55F;
     }
     @Override

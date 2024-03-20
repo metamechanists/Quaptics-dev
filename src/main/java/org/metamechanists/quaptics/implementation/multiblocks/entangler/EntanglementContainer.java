@@ -70,7 +70,7 @@ public class EntanglementContainer extends ConnectedBlock implements ItemHolderB
     }
 
     @Override
-    protected float getConnectionRadius() {
+    public float getConnectionRadius() {
         return 0.0F;
     }
     @Override

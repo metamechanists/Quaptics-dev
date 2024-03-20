@@ -74,7 +74,7 @@ public class Polariser extends ConnectedBlock implements PowerAnimatedBlock, Pow
     }
 
     @Override
-    protected float getConnectionRadius() {
+    public float getConnectionRadius() {
         return 0.0F;
     }
     @Override

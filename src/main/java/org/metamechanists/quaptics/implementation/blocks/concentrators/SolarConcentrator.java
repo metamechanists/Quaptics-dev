@@ -63,7 +63,7 @@ public class SolarConcentrator extends ConnectedBlock implements PowerAnimatedBl
     }
 
     @Override
-    protected float getConnectionRadius() {
+    public float getConnectionRadius() {
         return 0.60F;
     }
     @Override

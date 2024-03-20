@@ -4,6 +4,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -31,6 +32,7 @@ public class TargetingWand extends SlimefunItem {
             "&7● &eShift Right Click &7to remove a link");
 
     private static final float MIN_POINT_SEPARATION = 0.0001F;
+    private static final Color TARGETED_COLOR = Color.fromRGB(0, 255, 0);
 
     public TargetingWand(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -41,23 +43,23 @@ public class TargetingWand extends SlimefunItem {
     }
     private static void setSource(final Player player, @NotNull final ConnectionPointId sourceId, final ItemStack stack) {
         final Optional<ConnectionPoint> source = sourceId.get();
-        if (source.isEmpty()) {
+        if (source.isEmpty() || source.get().isGlowing()) {
             return;
         }
 
-        if (!(source.get().isOutput())) {
+        if (source.get().isInput()) {
             Language.sendLanguageMessage(player, "targeting-wand.source-must-be-output");
             return;
         }
 
-        source.get().select();
+        source.get().glowColor(TARGETED_COLOR);
         PersistentDataUtils.setString(stack, Keys.SOURCE, sourceId.toString());
     }
     public static void unsetSource(final ItemStack stack) {
         if (isSourceSet(stack)) {
             final ConnectionPointId sourcePointId = new ConnectionPointId(PersistentDataUtils.getString(stack, Keys.SOURCE));
             final Optional<ConnectionPoint> sourcePoint = sourcePointId.get();
-            sourcePoint.ifPresent(ConnectionPoint::deselect);
+            sourcePoint.ifPresent(ConnectionPoint::stopGlow);
         }
 
         PersistentDataUtils.clear(stack, Keys.SOURCE);

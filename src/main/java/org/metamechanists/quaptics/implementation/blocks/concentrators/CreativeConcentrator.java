@@ -63,7 +63,7 @@ public class CreativeConcentrator extends ConnectedBlock implements ConfigPanelB
     }
 
     @Override
-    protected float getConnectionRadius() {
+    public float getConnectionRadius() {
         return RADIUS;
     }
     @Override

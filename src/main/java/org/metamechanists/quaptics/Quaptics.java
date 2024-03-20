@@ -15,6 +15,7 @@ import org.metamechanists.quaptics.implementation.burnout.BurnoutManager;
 import org.metamechanists.quaptics.implementation.multiblocks.beacons.controllers.ModuleClickListener;
 import org.metamechanists.quaptics.implementation.multiblocks.beacons.modules.player.ExperienceModuleListener;
 import org.metamechanists.quaptics.implementation.tools.multiblockwand.MultiblockWandListener;
+import org.metamechanists.quaptics.implementation.tools.pointwand.PointWandListener;
 import org.metamechanists.quaptics.implementation.tools.targetingwand.TargetingWandListener;
 import org.metamechanists.quaptics.items.Groups;
 import org.metamechanists.quaptics.panels.config.ConfigPanelListener;
@@ -32,6 +33,7 @@ public final class Quaptics extends JavaPlugin implements SlimefunAddon {
     private void initializeListeners() {
         final PluginManager pluginManager = getServer().getPluginManager();
         pluginManager.registerEvents(new TargetingWandListener(), this);
+        pluginManager.registerEvents(new PointWandListener(), this);
         pluginManager.registerEvents(new PointInfoPanelListener(), this);
         pluginManager.registerEvents(new LaunchpadListener(), this);
         pluginManager.registerEvents(new ConfigPanelListener(), this);

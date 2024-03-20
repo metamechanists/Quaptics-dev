@@ -94,7 +94,7 @@ public class EnergyConcentrator extends EnergyConnectedBlock implements PowerAni
     }
 
     @Override
-    protected float getConnectionRadius() {
+    public float getConnectionRadius() {
         return 0.55F;
     }
     @Override

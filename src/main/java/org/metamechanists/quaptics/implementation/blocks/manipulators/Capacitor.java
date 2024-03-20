@@ -100,7 +100,7 @@ public class Capacitor extends ConnectedBlock implements InfoPanelBlock, PowerLo
     }
 
     @Override
-    protected float getConnectionRadius() {
+    public float getConnectionRadius() {
         return 0.60F;
     }
     @Override

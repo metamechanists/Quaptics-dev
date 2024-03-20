@@ -35,7 +35,7 @@ public class IndustrialInfusionPillar extends InfusionPillar {
     }
 
     @Override
-    protected float getConnectionRadius() {
+    public float getConnectionRadius() {
         return 0.40F;
     }
     @Override

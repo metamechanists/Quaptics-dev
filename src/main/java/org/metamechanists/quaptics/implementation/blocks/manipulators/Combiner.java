@@ -88,7 +88,7 @@ public class Combiner extends ConnectedBlock implements PowerAnimatedBlock, Powe
     }
 
     @Override
-    protected float getConnectionRadius() {
+    public float getConnectionRadius() {
         return 0.55F;
     }
     @Override

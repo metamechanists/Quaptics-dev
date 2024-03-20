@@ -90,7 +90,7 @@ public class Scatterer extends ConnectedBlock implements PowerAnimatedBlock, Pow
     }
 
     @Override
-    protected float getConnectionRadius() {
+    public float getConnectionRadius() {
         return 0.40F;
     }
     @Override

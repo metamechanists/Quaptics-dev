@@ -76,7 +76,7 @@ public class Transformer extends ConnectedBlock implements PowerAnimatedBlock, P
     }
 
     @Override
-    protected float getConnectionRadius() {
+    public float getConnectionRadius() {
         return 0.55F;
     }
     @Override

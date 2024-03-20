@@ -63,7 +63,7 @@ public class Launchpad extends ConnectedBlock implements ConfigPanelBlock, Power
     }
 
     @Override
-    protected float getConnectionRadius() {
+    public float getConnectionRadius() {
         return 0.80F;
     }
     @Override

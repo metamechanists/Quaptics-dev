@@ -1,11 +1,11 @@
 package org.metamechanists.quaptics.implementation.tools.targetingwand;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
-import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Interaction;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
@@ -23,14 +23,10 @@ public class TargetingWandListener implements Listener {
         wand.use(player, id, itemStack);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public static void interactEvent(@NotNull final PlayerInteractEntityEvent event) {
         final Entity clickedEntity = event.getRightClicked();
-        if (!(clickedEntity instanceof Interaction)) {
-            return;
-        }
-
-        if (!Slimefun.getProtectionManager().hasPermission(event.getPlayer(), clickedEntity.getLocation(), io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction.INTERACT_ENTITY)) {
+        if (clickedEntity.getType() != EntityType.INTERACTION) {
             return;
         }
 

@@ -49,7 +49,7 @@ public class InfusionPillar extends ConnectedBlock implements PowerAnimatedBlock
     }
 
     @Override
-    protected float getConnectionRadius() {
+    public float getConnectionRadius() {
         return 0.30F;
     }
     @Override

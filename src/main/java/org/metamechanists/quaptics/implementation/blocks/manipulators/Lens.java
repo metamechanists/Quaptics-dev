@@ -79,7 +79,7 @@ public class Lens extends ConnectedBlock implements PowerAnimatedBlock, PowerLos
     }
 
     @Override
-    protected float getConnectionRadius() {
+    public float getConnectionRadius() {
         return 0.40F;
     }
     @Override
