@@ -1,7 +1,6 @@
 package org.metamechanists.quaptics.implementation.tools.pointwand;
 
-import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
-import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
+import it.unimi.dsi.fastutil.Pair;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -17,15 +16,25 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
+import org.metamechanists.quaptics.storage.PersistentDataTraverser;
+import org.metamechanists.quaptics.utils.PersistentDataUtils;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionPointId;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-
 public class PointWandListener implements Listener {
-    private static final Map<UUID, ConnectionPointId> PLAYERS = new HashMap<>();
     private static final Color SELECTED_COLOR = Color.fromRGB(0, 255, 255);
+    private static final Pair<ItemStack, PersistentDataTraverser> EMPTY = Pair.of(null, null);
+
+    public static Pair<ItemStack, PersistentDataTraverser> getPointWand(Player player) {
+        final PlayerInventory inventory = player.getInventory();
+        final boolean mainHand = "QP_POINT_WAND".equals(PersistentDataUtils.getSlimefunId(inventory.getItemInMainHand()));
+        final ItemStack stack = mainHand ? inventory.getItemInMainHand() : inventory.getItemInOffHand();
+        final PersistentDataTraverser traverser = new PersistentDataTraverser(stack);
+        if (!"QP_POINT_WAND".equals(traverser.getSlimefunId())) {
+            return Pair.of(null, null);
+        }
+
+        return Pair.of(stack, traverser);
+    }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public static void moveEvent(@NotNull final PlayerMoveEvent event) {
@@ -33,13 +42,17 @@ public class PointWandListener implements Listener {
             return;
         }
 
-        final Player player = event.getPlayer();
-        final ConnectionPointId pointId = PLAYERS.get(player.getUniqueId());
-        if (pointId == null) {
+        final Pair<ItemStack, PersistentDataTraverser> wand = getPointWand(event.getPlayer());
+        if (wand.equals(EMPTY)) {
             return;
         }
 
-        pointId.get().ifPresent(point -> point.getGroup().ifPresent(group -> {
+        final ConnectionPointId id = wand.value().getConnectionPointId("point");
+        if (id == null) {
+            return;
+        }
+
+        id.get().ifPresent(point -> point.getGroup().ifPresent(group -> {
             final Location groupLocation = group.getLocation().orElse(null);
             if (groupLocation == null) {
                 return;
@@ -48,14 +61,7 @@ public class PointWandListener implements Listener {
             final float radius = group.getBlock().getConnectionRadius();
             final Location centerLocation = groupLocation.getBlock().getLocation().toCenterLocation();
 
-            final double yaw = Math.toRadians(event.getTo().getYaw());
-            final double pitch = Math.toRadians(event.getTo().getPitch());
-
-            final double x = radius * Math.cos(pitch) * Math.cos(yaw);
-            final double y = radius * Math.sin(pitch);
-            final double z = radius * Math.cos(pitch) * Math.sin(yaw);
-
-            point.changeLocation(centerLocation.clone().add(x, y, z));
+            point.changeLocation(centerLocation.clone().add(event.getTo().getDirection().clone().normalize().multiply(radius)));
         }));
     }
 
@@ -66,41 +72,32 @@ public class PointWandListener implements Listener {
             return;
         }
 
-        final ConnectionPointId pointId = new ConnectionPointId(clickedEntity.getUniqueId());
-        if (!pointId.isValid() || pointId.get().isEmpty()) {
+        final Pair<ItemStack, PersistentDataTraverser> wand = getPointWand(event.getPlayer());
+        if (wand.equals(EMPTY)) {
             return;
         }
 
-        final Player player = event.getPlayer();
-        final ConnectionPoint point = pointId.get().get();
+        if (PointWand.tryUnSelect(wand.key(), wand.value())) {
+            return;
+        }
+
+        final ConnectionPointId id = new ConnectionPointId(clickedEntity.getUniqueId());
+        if (!id.isValid() || id.get().isEmpty()) {
+            return;
+        }
+
+        final ConnectionPoint point = id.get().get();
         if (point.isGlowing()) {
-            if (point.isGlowing(SELECTED_COLOR)) {
-                PLAYERS.remove(player.getUniqueId());
-                point.stopGlow();
-            }
             return;
         }
 
-        if (SlimefunItem.getByItem(player.getInventory().getItem(event.getHand())) instanceof PointWand) {
-            point.glowColor(SELECTED_COLOR);
-            PLAYERS.put(player.getUniqueId(), pointId);
-        }
-    }
-
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public static void rightClickEvent(@NotNull final PlayerRightClickEvent event) {
-        if (event.getSlimefunItem().orElse(null) instanceof PointWand && PLAYERS.containsKey(event.getPlayer().getUniqueId())) {
-            PLAYERS.remove(event.getPlayer().getUniqueId()).get().ifPresent(ConnectionPoint::stopGlow);
-        }
+        wand.value().set("point", id);
+        wand.value().save(wand.key());
+        point.glowColor(SELECTED_COLOR);
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public static void scrollEvent(@NotNull final PlayerItemHeldEvent event) {
-        final Player player = event.getPlayer();
-        final PlayerInventory inventory = player.getInventory();
-        final ItemStack heldItem = inventory.getItem(event.getPreviousSlot());
-        if (SlimefunItem.getByItem(heldItem) instanceof PointWand && PLAYERS.containsKey(player.getUniqueId())) {
-            PLAYERS.remove(player.getUniqueId()).get().ifPresent(ConnectionPoint::stopGlow);
-        }
+        PointWand.tryUnSelect(event.getPlayer().getInventory().getItem(event.getPreviousSlot()));
     }
 }

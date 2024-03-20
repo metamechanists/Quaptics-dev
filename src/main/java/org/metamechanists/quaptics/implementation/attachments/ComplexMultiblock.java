@@ -58,18 +58,18 @@ public interface ComplexMultiblock {
         return getStructure().entrySet().stream().allMatch(entry -> isStructureBlockValid(center, entry.getKey(), entry.getValue()));
     }
 
-    private static @NotNull @Unmodifiable List<UUID> projectBlock(final @NotNull Block center, final @NotNull Vector offset, final @NotNull ItemStack itemStack) {
+    private static @NotNull @Unmodifiable List<UUID> projectBlock(final @NotNull Block center, final @NotNull Vector offset, final @NotNull ItemStack stack) {
         final Block block = center.getRelative(offset.getBlockX(), offset.getBlockY(), offset.getBlockZ());
         if (block.getType().isEmpty()) {
             GHOST_BLOCK_DISPLAY.setGlowColorOverride(EMPTY_COLOR);
         } else {
-            GHOST_BLOCK_DISPLAY.setGlowColorOverride(isStructureBlockValid(block, itemStack)
+            GHOST_BLOCK_DISPLAY.setGlowColorOverride(isStructureBlockValid(block, stack)
                             ? RIGHT_MATERIAL_COLOR
                             : WRONG_MATERIAL_COLOR);
         }
 
         final ItemDisplay itemDisplay = GHOST_BLOCK_DISPLAY
-                .setItemStack(new ItemStack(itemStack))
+                .setItemStack(new ItemStack(stack))
                 .setLocation(block.getLocation().toCenterLocation())
                 .build();
         itemDisplay.setGlowing(true);
@@ -93,15 +93,15 @@ public interface ComplexMultiblock {
         traverser.save(wand);
     }
 
-    default void multiblockInteract(final Block center, final Player player, final ItemStack itemStack) {
-        MultiblockWand.updateLore(itemStack);
+    default void multiblockInteract(final Block center, final Player player, final ItemStack stack) {
+        MultiblockWand.updateLore(stack);
         if (isStructureValid(center)) {
             Language.sendLanguageMessage(player, "multiblock.valid");
             return;
         }
 
-        MultiblockWand.removeProjection(itemStack);
-        visualiseStructure(itemStack, center);
+        MultiblockWand.removeProjection(stack);
+        visualiseStructure(stack, center);
     }
     default boolean multiblockInteract(final Block center, final @NotNull Player player) {
         final ItemStack mainHandItem = player.getInventory().getItemInMainHand();

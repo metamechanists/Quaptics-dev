@@ -1,6 +1,7 @@
 package org.metamechanists.quaptics.storage;
 
 import io.github.bakedlibs.dough.data.persistent.PersistentDataAPI;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -43,6 +44,7 @@ import java.util.stream.IntStream;
 public class PersistentDataTraverser {
     private final PersistentDataHolder persistentDataHolder;
     private static final Map<String, NamespacedKey> keys = new ConcurrentHashMap<>();
+    private static final NamespacedKey slimefunKey = Slimefun.getItemDataService().getKey();
 
     public PersistentDataTraverser(@NotNull final CustomId id) {
         this.persistentDataHolder = Bukkit.getEntity(id.getUUID());
@@ -156,6 +158,9 @@ public class PersistentDataTraverser {
     }
     public @Nullable String getString(@NotNull final String key) {
         return PersistentDataAPI.getString(persistentDataHolder, getKey(key));
+    }
+    public @Nullable String getSlimefunId() {
+        return PersistentDataAPI.getString(persistentDataHolder, slimefunKey);
     }
     public @Nullable Vector getVector(@NotNull final String key) {
         return new Vector(

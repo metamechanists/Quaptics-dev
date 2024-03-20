@@ -28,7 +28,9 @@ import org.metamechanists.quaptics.utils.id.simple.ItemDisplayId;
 public class MultiblockWandListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public static void placeEvent(@NotNull final BlockPlaceEvent event) {
-        Slimefun.runSync(() -> updateProjection(event.getBlock()), 1L);
+        if (shouldUpdateProjection(event.getBlock())) {
+            Slimefun.runSync(() -> updateProjection(event.getBlock()), 1L);
+        }
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -39,36 +41,28 @@ public class MultiblockWandListener implements Listener {
         }
 
         final Block block = clickedEntity.getLocation().getBlock();
-        final ItemDisplayId displayId = ComplexMultiblock.CACHE.get(new BlockPosition(block));
-        if (displayId == null || displayId.get().isEmpty()) {
+        final ItemDisplayId id = ComplexMultiblock.CACHE.get(new BlockPosition(block));
+        if (id == null || id.get().isEmpty()) {
             return;
         }
 
-        final ItemStack itemStack = displayId.get().get().getItemStack();
-        final SlimefunItem slimefunItem = SlimefunItem.getByItem(itemStack);
-        if (itemStack == null) {
+        final ItemStack stack = id.get().get().getItemStack();
+        final SlimefunItem slimefunItem = SlimefunItem.getByItem(stack);
+        if (stack == null) {
             return;
         }
 
-        final ItemStack mainHandItem = event.getPlayer().getInventory().getItemInMainHand();
-        final ItemStack offHandItem = event.getPlayer().getInventory().getItemInOffHand();
-        if (block.isEmpty() && (SlimefunUtils.isItemSimilar(mainHandItem, itemStack, true) || SlimefunUtils.isItemSimilar(offHandItem, itemStack, true))) {
+        final ItemStack mainItem = event.getPlayer().getInventory().getItemInMainHand();
+        final ItemStack offItem = event.getPlayer().getInventory().getItemInOffHand();
+        if (block.isEmpty() && (SlimefunUtils.isItemSimilar(mainItem, stack, true) || SlimefunUtils.isItemSimilar(offItem, stack, true))) {
             if (Slimefun.getProtectionManager().hasPermission(event.getPlayer(), block, Interaction.PLACE_BLOCK)) {
-                block.setType(itemStack.getType());
-                final boolean mainHand = SlimefunUtils.isItemSimilar(mainHandItem, itemStack, true);
-                if (slimefunItem != null) {
-                    final BlockPlaceEvent placeEvent = new BlockPlaceEvent(block, block.getState(), block, itemStack, event.getPlayer(), true, mainHand ? EquipmentSlot.HAND : EquipmentSlot.OFF_HAND);
-                    BlockStorage.store(block, slimefunItem.getId());
-                    slimefunItem.callItemHandler(BlockPlaceHandler.class, handler -> handler.onPlayerPlace(placeEvent));
-                }
-                (mainHand ? mainHandItem : offHandItem).subtract();
-                Slimefun.runSync(() -> updateProjection(block), 1L);
+                easyPlaceBlock(event, block, stack, mainItem, slimefunItem, offItem);
                 return;
             }
         }
 
-        if ((SlimefunItem.getByItem(mainHandItem) instanceof MultiblockWand) || (SlimefunItem.getByItem(offHandItem) instanceof MultiblockWand)) {
-            final String blockName = slimefunItem != null ? slimefunItem.getItemName() : ChatUtils.humanize(itemStack.getType().name());
+        if ((SlimefunItem.getByItem(mainItem) instanceof MultiblockWand) || (SlimefunItem.getByItem(offItem) instanceof MultiblockWand)) {
+            final String blockName = slimefunItem != null ? slimefunItem.getItemName() : ChatUtils.humanize(stack.getType().name());
             Language.sendLanguageMessage(event.getPlayer(), "multiblock.block-name", blockName);
         }
         Slimefun.runSync(() -> updateProjection(block), 1L);
@@ -76,7 +70,25 @@ public class MultiblockWandListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public static void breakEvent(@NotNull final BlockBreakEvent event) {
-        Slimefun.runSync(() -> updateProjection(event.getBlock()), 1L);
+        if (shouldUpdateProjection(event.getBlock())) {
+            Slimefun.runSync(() -> updateProjection(event.getBlock()), 1L);
+        }
+    }
+
+    public static void easyPlaceBlock(@NotNull PlayerInteractEntityEvent event, Block block, ItemStack stack, ItemStack mainItem, SlimefunItem slimefunItem, ItemStack offItem) {
+        block.setType(stack.getType());
+        final boolean mainHand = SlimefunUtils.isItemSimilar(mainItem, stack, true);
+        if (slimefunItem != null) {
+            final BlockPlaceEvent placeEvent = new BlockPlaceEvent(block, block.getState(), block, stack, event.getPlayer(), true, mainHand ? EquipmentSlot.HAND : EquipmentSlot.OFF_HAND);
+            BlockStorage.store(block, slimefunItem.getId());
+            slimefunItem.callItemHandler(BlockPlaceHandler.class, handler -> handler.onPlayerPlace(placeEvent));
+        }
+        (mainHand ? mainItem : offItem).subtract();
+        Slimefun.runSync(() -> updateProjection(block), 1L);
+    }
+
+    public static boolean shouldUpdateProjection(Block block) {
+        return ComplexMultiblock.CACHE.containsKey(new BlockPosition(block));
     }
 
     public static void updateProjection(Block block) {
@@ -88,16 +100,16 @@ public class MultiblockWandListener implements Listener {
 
         id.get().ifPresent(itemDisplay -> {
             boolean correct;
-            final ItemStack itemStack = itemDisplay.getItemStack();
-            if (itemStack == null) {
+            final ItemStack stack = itemDisplay.getItemStack();
+            if (stack == null) {
                 return;
             }
 
-            final SlimefunItem slimefunItem = SlimefunItem.getByItem(itemStack);
+            final SlimefunItem slimefunItem = SlimefunItem.getByItem(stack);
             if (slimefunItem != null) {
                 correct = BlockStorage.check(block, slimefunItem.getId());
             } else {
-                correct = itemStack.getType() == block.getType();
+                correct = stack.getType() == block.getType();
             }
 
             if (block.isEmpty()) {

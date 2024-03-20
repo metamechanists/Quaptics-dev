@@ -1,6 +1,7 @@
 package org.metamechanists.quaptics.utils;
 
 import io.github.bakedlibs.dough.data.persistent.PersistentDataAPI;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import lombok.experimental.UtilityClass;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -22,5 +23,9 @@ public class PersistentDataUtils {
     public String getString(@NotNull final ItemStack stack, @NotNull final NamespacedKey key) {
         final ItemMeta meta = stack.getItemMeta();
         return PersistentDataAPI.getString(meta, key);
+    }
+    public String getSlimefunId(@NotNull final ItemStack stack) {
+        final ItemMeta meta = stack.getItemMeta();
+        return PersistentDataAPI.getString(meta, Slimefun.getItemDataService().getKey());
     }
 }

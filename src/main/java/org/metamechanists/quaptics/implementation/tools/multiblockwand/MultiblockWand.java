@@ -31,29 +31,29 @@ public class MultiblockWand extends SlimefunItem {
 
     // Updates the lore of the item (it changed between versions)
     // TODO: Remove this later
-    public static void updateLore(final ItemStack itemStack) {
-        if (!(SlimefunItem.getByItem(itemStack) instanceof MultiblockWand multiblockWand)) {
+    public static void updateLore(final ItemStack stack) {
+        if (!(SlimefunItem.getByItem(stack) instanceof MultiblockWand wand)) {
             return;
         }
 
-        final ItemMeta itemMeta = itemStack.getItemMeta();
-        if (itemMeta == null) {
+        final ItemMeta meta = stack.getItemMeta();
+        if (meta == null) {
             return;
         }
 
-        itemMeta.lore(multiblockWand.getItem().lore());
-        itemStack.setItemMeta(itemMeta);
+        meta.lore(wand.getItem().lore());
+        stack.setItemMeta(meta);
     }
 
-    public static void removeProjection(final ItemStack itemStack) {
-        final PersistentDataTraverser traverser = new PersistentDataTraverser(itemStack);
+    public static void removeProjection(final ItemStack stack) {
+        final PersistentDataTraverser traverser = new PersistentDataTraverser(stack);
         final List<UUID> uuids = traverser.getUuidList("uuids");
         if (uuids == null) {
             return;
         }
 
         traverser.removeIf(key -> key.contains("uuids"));
-        traverser.save(itemStack);
+        traverser.save(stack);
         uuids.stream()
                 .map(Bukkit::getEntity)
                 .filter(Objects::nonNull)
