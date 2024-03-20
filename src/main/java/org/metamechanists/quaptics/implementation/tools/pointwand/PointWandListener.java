@@ -28,9 +28,13 @@ public class PointWandListener implements Listener {
         final PlayerInventory inventory = player.getInventory();
         final boolean mainHand = "QP_POINT_WAND".equals(PersistentDataUtils.getSlimefunId(inventory.getItemInMainHand()));
         final ItemStack stack = mainHand ? inventory.getItemInMainHand() : inventory.getItemInOffHand();
+        if (stack == null || stack.getType().isAir() || !stack.hasItemMeta()) {
+            return EMPTY;
+        }
+
         final PersistentDataTraverser traverser = new PersistentDataTraverser(stack);
         if (!"QP_POINT_WAND".equals(traverser.getSlimefunId())) {
-            return Pair.of(null, null);
+            return EMPTY;
         }
 
         return Pair.of(stack, traverser);

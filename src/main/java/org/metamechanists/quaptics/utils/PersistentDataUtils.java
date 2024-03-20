@@ -25,6 +25,9 @@ public class PersistentDataUtils {
         return PersistentDataAPI.getString(meta, key);
     }
     public String getSlimefunId(@NotNull final ItemStack stack) {
+        if (stack == null || stack.getType().isAir() || !stack.hasItemMeta()) {
+            return null;
+        }
         final ItemMeta meta = stack.getItemMeta();
         return PersistentDataAPI.getString(meta, Slimefun.getItemDataService().getKey());
     }
