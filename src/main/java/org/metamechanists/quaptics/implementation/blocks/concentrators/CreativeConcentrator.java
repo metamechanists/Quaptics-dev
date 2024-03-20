@@ -135,26 +135,25 @@ public class CreativeConcentrator extends ConnectedBlock implements ConfigPanelB
 
     public static void onConfigUpdated(final Location location) {
         getGroup(location).ifPresent(group -> {
-            final float yaw = BlockStorageAPI.getFloat(location, Keys.BS_FACING);
+            final int pointCount = BlockStorageAPI.getInt(location, Keys.BS_POINTS);
             final List<ConnectionPoint> points = new ArrayList<>(group.getPointList());
             points.removeIf(point -> !point.isOutput());
 
-            final int pointCount = BlockStorageAPI.getInt(location, Keys.BS_POINTS);
+            if (pointCount == points.size()) {
+                return;
+            }
+
             for (int i = 0; i < points.size(); i++) {
                 if (i >= pointCount) {
                     group.removePoint(points.get(i)).ifPresent(ConnectionPoint::remove);
                 }
             }
 
+            final float yaw = BlockStorageAPI.getFloat(location, Keys.BS_FACING);
             for (int i = 0; i < pointCount; i++) {
-                final Location pointLocation = formatPointLocation(yaw, location, getRelativeOutputLocation(i));
-                final ConnectionPoint point = points.size() > i ? points.get(i) : new ConnectionPoint(ConnectionPointType.OUTPUT, group.getId(), "output " + i, pointLocation);
-                if (points.size() > i && point.getLink().isEmpty()) {
-                    point.changeLocation(pointLocation);
-                }
-
                 if (points.size() <= i) {
-                    group.addPoint(point);
+                    final Location pointLocation = formatPointLocation(yaw, location, getRelativeOutputLocation(i));
+                    group.addPoint(new ConnectionPoint(ConnectionPointType.OUTPUT, group.getId(), "output " + i, pointLocation));
                 }
             }
         });

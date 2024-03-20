@@ -26,8 +26,8 @@ public class Link {
     private final LinkId id;
     private final ConnectionPointId outputId;
     private final ConnectionPointId inputId;
-    private final Location outputLocation;
-    private final Location inputLocation;
+    private Location outputLocation;
+    private Location inputLocation;
     private final double maxPower;
     private @Nullable DirectBeamId directBeamId;
     @Getter
@@ -121,8 +121,10 @@ public class Link {
     private Optional<DirectBeam> getBeam() {
         return Optional.ofNullable(directBeamId).map(DirectBeam::new);
     }
-    private void regenerateBeam() {
+    public void regenerateBeam() {
         getBeam().ifPresent(DirectBeam::deprecate);
+        outputLocation = getOutput().flatMap(ConnectionPoint::getLocation).orElse(outputLocation);
+        inputLocation = getInput().flatMap(ConnectionPoint::getLocation).orElse(inputLocation);
         this.directBeamId = new DirectBeam(
                 FrequencyColor.getMaterial(frequency),
                 outputLocation,

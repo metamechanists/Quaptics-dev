@@ -14,8 +14,10 @@ import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
+import org.metamechanists.quaptics.connections.Link;
 import org.metamechanists.quaptics.storage.PersistentDataTraverser;
 import org.metamechanists.quaptics.utils.PersistentDataUtils;
 import org.metamechanists.quaptics.utils.id.complex.ConnectionPointId;
@@ -46,7 +48,8 @@ public class PointWandListener implements Listener {
             return;
         }
 
-        final Pair<ItemStack, PersistentDataTraverser> wand = getPointWand(event.getPlayer());
+        final Player player = event.getPlayer();
+        final Pair<ItemStack, PersistentDataTraverser> wand = getPointWand(player);
         if (wand.equals(EMPTY)) {
             return;
         }
@@ -66,6 +69,7 @@ public class PointWandListener implements Listener {
             final Location centerLocation = groupLocation.getBlock().getLocation().toCenterLocation();
 
             point.changeLocation(centerLocation.clone().add(event.getTo().getDirection().clone().normalize().multiply(radius)));
+            point.getLink().ifPresent(Link::regenerateBeam);
         }));
     }
 
