@@ -1,5 +1,6 @@
 package org.metamechanists.quaptics.implementation.blocks.concentrators;
 
+import com.google.common.collect.Lists;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -36,6 +37,7 @@ import org.metamechanists.quaptics.utils.id.complex.ConnectionGroupId;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class CreativeConcentrator extends ConnectedBlock implements ConfigPanelBlock {
@@ -138,6 +140,8 @@ public class CreativeConcentrator extends ConnectedBlock implements ConfigPanelB
             final float yaw = BlockStorageAPI.getFloat(location, Keys.BS_FACING);
             final List<ConnectionPoint> points = new ArrayList<>(group.getPointList());
             points.removeIf(point -> !point.isOutput());
+            points.sort(Comparator.comparingInt(point -> Integer.parseInt(point.getName().split(" ")[1])));
+            Lists.reverse(points);
 
             final int pointCount = BlockStorageAPI.getInt(location, Keys.BS_POINTS);
             for (int i = 0; i < points.size(); i++) {
@@ -145,6 +149,10 @@ public class CreativeConcentrator extends ConnectedBlock implements ConfigPanelB
                     group.removePoint(points.get(i)).ifPresent(ConnectionPoint::remove);
                 }
             }
+
+            // it removes any extra points
+            // if a point is unlinked, it will reset its location
+            // and then if there are not enough points it generates them
 
             for (int i = 0; i < pointCount; i++) {
                 final Location pointLocation = formatPointLocation(yaw, location, getRelativeOutputLocation(i));

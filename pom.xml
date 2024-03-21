@@ -97,6 +97,16 @@
             <artifactId>MetaLib</artifactId>
             <version>46</version>
             <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>de.tr7zw</groupId>
+                    <artifactId>item-nbt-api-plugin</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.metamechanists</groupId>
+                    <artifactId>DisplayModelLib</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
