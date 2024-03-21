@@ -146,13 +146,12 @@ public class CreativeConcentrator extends ConnectedBlock implements ConfigPanelB
             final int pointCount = BlockStorageAPI.getInt(location, Keys.BS_POINTS);
             for (int i = 0; i < points.size(); i++) {
                 if (i >= pointCount) {
-                    group.removePoint(points.get(i)).ifPresent(ConnectionPoint::remove);
+                    group.removePoint(points.get(i)).ifPresent(point -> {
+                        point.getLink().ifPresent(Link::remove);
+                        point.remove();
+                    });
                 }
             }
-
-            // it removes any extra points
-            // if a point is unlinked, it will reset its location
-            // and then if there are not enough points it generates them
 
             for (int i = 0; i < pointCount; i++) {
                 final Location pointLocation = formatPointLocation(yaw, location, getRelativeOutputLocation(i));

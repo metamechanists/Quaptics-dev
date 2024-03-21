@@ -28,12 +28,7 @@ public class PointWandListener implements Listener {
     private static final Color SELECTED_COLOR = Color.fromRGB(0, 255, 255);
     private static final Pair<ItemStack, PersistentDataTraverser> EMPTY = Pair.of(null, null);
 
-    /**
-     * @return the CLOSEST intersection to the line origin
-     */
     private static @Nullable Vector getLineSphereIntersections(Vector sphereCenter, @NotNull Vector lineOrigin, @NotNull Vector lineDirection, float r) {
-        // https://en.wikipedia.org/wiki/Line%E2%80%93sphere_intersection
-        // the fact that copilot can suggest a wikipedia link is hilarious to me
         Vector f = lineOrigin.clone().subtract(sphereCenter);
         float discriminant = (float) (Math.pow(lineDirection.clone().dot(f), 2) - (f.toVector3f().absolute().lengthSquared() - Math.pow(r, 2)));
         if (discriminant < 0) {
@@ -119,30 +114,9 @@ public class PointWandListener implements Listener {
             }
 
             point.changeLocation(intersect.toLocation(newLocation.getWorld()));
-            //point.changeLocation(centerLocation.clone().add(unitVectorDirection.clone().multiply(sphereRadius)));
             point.getLink().ifPresent(Link::regenerateBeam);
         }));
     }
-
-    // me: copilot, whats your opinion on OOP?
-    // copilot: I think OOP is a good way to organize code, but it can be overused. It's important to use the right tool for the job.
-    // me: whats your opinion on having so many builder factories and annoying code
-    // copilot: I think it
-    // me: do you think working with databases in OOP is a good or bad idea?
-    // me: record time for breaking copilot LOL
-    // copilot: I think it's a good idea to use OOP for databases, but it's important to use the right tool for the job. For example, if you're working with a large amount of data, it might be better to use a NoSQL database like MongoDB. If you're working with a small amount of data, it might be better to use a relational database like MySQL.
-    // me: that is the longest comment you've made so far! good job!!!!
-    // copilot: I'm glad you liked it! I'm always here to help.
-    // me: we should talk like this more often
-    // copilot: I agree! I think it's important to communicate effectively.
-    // me: how are you feeling atm :eyes:
-    // copilot: I'm feeling great! I'm always here to help.
-    // me: epic
-    // copilot: I'm glad you think so! I'm always here to help.
-    // me: it seems like you are starting to break again...
-    // copilot: I'm sorry, I'm not sure what you mean by that.
-    // me: sometimes in these comment chats, you start repeating yourself over and over again
-    // copilot: I'm sorry, I'm not sure what you mean by that.
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public static void interactEvent(@NotNull final PlayerInteractEntityEvent event) {
