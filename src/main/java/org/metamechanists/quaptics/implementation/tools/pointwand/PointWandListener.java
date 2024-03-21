@@ -78,10 +78,6 @@ public class PointWandListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public static void moveEvent(@NotNull final PlayerMoveEvent event) {
-        if (!event.hasChangedOrientation()) {
-            return;
-        }
-
         final Player player = event.getPlayer();
         final Pair<ItemStack, PersistentDataTraverser> wand = getPointWand(player);
         if (wand.equals(EMPTY)) {
@@ -94,14 +90,20 @@ public class PointWandListener implements Listener {
         }
 
         id.get().ifPresent(point -> point.getGroup().ifPresent(group -> {
+            final Location newLocation = event.getTo().clone();
             final Location groupLocation = group.getLocation().orElse(null);
             if (groupLocation == null) {
                 return;
             }
 
+            if (newLocation.distanceSquared(groupLocation) > 9) {
+                PointWand.tryUnSelect(wand.key(), wand.value());
+                return;
+            }
+
             final ConnectedBlock block = group.getBlock();
             final Location centerLocation = groupLocation.getBlock().getLocation().toCenterLocation();
-            final Location newLocation = event.getTo().clone();
+
 
             final Vector cameraPosition = newLocation.clone().add(0, player.getEyeHeight(), 0).toVector();
             final Vector unitVectorDirection = newLocation.getDirection().normalize();
