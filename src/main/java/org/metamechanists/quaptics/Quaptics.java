@@ -64,7 +64,7 @@ public final class Quaptics extends JavaPlugin implements SlimefunAddon {
         saveDefaultConfig();
 
         if (getConfig().getBoolean("auto-update") && getDescription().getVersion().startsWith("DEV")) {
-            new BlobBuildsUpdater(this, getFile(), "LordIdra/Quaptics/master").start();
+            new BlobBuildUpdater(this, getFile(), "LordIdra/Quaptics/master").start();
         }
 
         instance = this;
