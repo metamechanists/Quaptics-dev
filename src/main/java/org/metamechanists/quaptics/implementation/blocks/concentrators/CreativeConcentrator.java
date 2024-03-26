@@ -143,7 +143,7 @@ public class CreativeConcentrator extends ConnectedBlock implements ConfigPanelB
             Lists.reverse(points);
 
             final int pointCount = BlockStorageAPI.getInt(location, Keys.BS_POINTS);
-            for (int i = 1; i < points.size() + 1; i++) {
+            for (int i = 1; i <= points.size(); i++) {
                 if (i > pointCount) {
                     group.removePoint(points.get(i - 1)).ifPresent(point -> {
                         point.getLink().ifPresent(Link::remove);
@@ -152,7 +152,7 @@ public class CreativeConcentrator extends ConnectedBlock implements ConfigPanelB
                 }
             }
 
-            for (int i = 2; i < pointCount; i++) {
+            for (int i = 2; i <= pointCount; i++) {
                 final Location pointLocation = formatPointLocation(yaw, location, getRelativeOutputLocation(i));
                 if (points.size() >= i) {
                     points.get(i - 1).changeLocation(pointLocation);
