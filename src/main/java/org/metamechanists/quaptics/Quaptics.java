@@ -1,7 +1,7 @@
 package org.metamechanists.quaptics;
 
 import co.aikar.commands.PaperCommandManager;
-import io.github.bakedlibs.dough.updater.GitHubBuildsUpdater;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.updater.BlobBuildUpdater;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.libraries.paperlib.PaperLib;
 import lombok.Getter;
