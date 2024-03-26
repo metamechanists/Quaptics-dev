@@ -133,7 +133,6 @@
         <dependency>
             <groupId>io.github.TheBusyBiscuit</groupId>
             <artifactId>Slimefun4</artifactId>
-            <version>RC-29</version>
             <version>RC-37</version>
             <scope>provided</scope>
         </dependency>
