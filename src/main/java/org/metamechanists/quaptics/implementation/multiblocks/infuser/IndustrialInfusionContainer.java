@@ -13,19 +13,14 @@ import org.metamechanists.displaymodellib.models.ModelBuilder;
 import org.metamechanists.displaymodellib.models.components.ModelCuboid;
 import org.metamechanists.displaymodellib.models.components.ModelItem;
 import org.metamechanists.displaymodellib.sefilib.entity.display.DisplayGroup;
-import org.metamechanists.metalib.utils.ItemUtils;
 import org.metamechanists.quaptics.implementation.Settings;
-import org.metamechanists.quaptics.implementation.attachments.ItemHolderBlock;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
-import org.metamechanists.quaptics.utils.BlockStorageAPI;
-import org.metamechanists.quaptics.utils.Keys;
 import org.metamechanists.quaptics.utils.Utils;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Optional;
 
 import static org.metamechanists.quaptics.implementation.multiblocks.infuser.IndustrialInfusionPillar.INDUSTRIAL_INFUSION_PILLAR;
 
@@ -58,6 +53,15 @@ public class IndustrialInfusionContainer extends InfusionContainer {
 
     public IndustrialInfusionContainer(final ItemGroup itemGroup, final SlimefunItemStack item, final RecipeType recipeType, final ItemStack[] recipe, final Settings settings) {
         super(itemGroup, item, recipeType, recipe, settings);
+    }
+
+    @Override
+    protected boolean onRightClick(@NotNull Location location, @NotNull Player player) {
+        if (multiblockInteract(location.getBlock(), player)) {
+            return true;
+        }
+        itemHolderInteract(location, "item", player, 16);
+        return true;
     }
 
     @Override
@@ -118,27 +122,5 @@ public class IndustrialInfusionContainer extends InfusionContainer {
     @Override
     public Map<Vector, ItemStack> getStructure() {
         return PILLARS;
-    }
-
-    @Override
-    public void itemHolderInteract(@NotNull final Location location, @NotNull final String name, @NotNull final Player player) {
-        final Optional<ItemStack> currentStack = removeItem(location, name);
-        BlockStorageAPI.set(location, Keys.BS_IS_HOLDING_ITEM, false);
-        if (currentStack.isPresent() && !isEmptyItemStack(currentStack.get())) {
-            onRemove(location, name, currentStack.get()).ifPresent(itemStack -> ItemUtils.addOrDropItemMainHand(player, itemStack));
-            return;
-        }
-
-        final ItemStack itemStack = player.getInventory().getItemInMainHand();
-        final int amount = Math.min(itemStack.getAmount(), 16);
-        final ItemStack newItemStack = itemStack.clone();
-        newItemStack.setAmount(amount);
-        if (newItemStack.getType().isEmpty() || !onInsert(location, name, newItemStack, player)) {
-            return;
-        }
-
-        itemStack.subtract(amount);
-        ItemHolderBlock.insertItem(location, name, newItemStack);
-        BlockStorageAPI.set(location, Keys.BS_IS_HOLDING_ITEM, true);
     }
 }

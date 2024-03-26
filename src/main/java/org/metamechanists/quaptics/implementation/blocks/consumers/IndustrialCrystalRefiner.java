@@ -43,6 +43,12 @@ public class IndustrialCrystalRefiner extends CrystalRefiner {
     }
 
     @Override
+    protected boolean onRightClick(@NotNull Location location, @NotNull Player player) {
+        itemHolderInteract(location, "item", player, 16);
+        return true;
+    }
+
+    @Override
     public float getConnectionRadius() {
         return 1.10F;
     }

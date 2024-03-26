@@ -60,6 +60,10 @@ public interface ItemHolderBlock {
     }
 
     default void itemHolderInteract(@NotNull final Location location, @NotNull final String name, @NotNull final Player player) {
+        itemHolderInteract(location, name, player, 1);
+    }
+
+    default void itemHolderInteract(@NotNull final Location location, @NotNull final String name, @NotNull final Player player, int maxAmount) {
         final Optional<ItemStack> currentStack = removeItem(location, name);
         BlockStorageAPI.set(location, Keys.BS_IS_HOLDING_ITEM, false);
         if (currentStack.isPresent() && !isEmptyItemStack(currentStack.get())) {
@@ -67,13 +71,16 @@ public interface ItemHolderBlock {
             return;
         }
 
-        final ItemStack itemStack = player.getInventory().getItemInMainHand().asOne();
+        final ItemStack mainHand = player.getInventory().getItemInMainHand();
+        final int amount = Math.min(mainHand.getAmount(), Math.min(mainHand.getMaxStackSize(), maxAmount));
+        final ItemStack itemStack = mainHand.asQuantity(amount);
+
         if (itemStack.getType().isEmpty() || !onInsert(location, name, itemStack, player)) {
             return;
         }
 
+        mainHand.subtract(amount);
         insertItem(location, name, itemStack);
-        player.getInventory().getItemInMainHand().subtract();
         BlockStorageAPI.set(location, Keys.BS_IS_HOLDING_ITEM, true);
     }
     default void onBreakItemHolderBlock(final Location location, @NotNull final String name) {

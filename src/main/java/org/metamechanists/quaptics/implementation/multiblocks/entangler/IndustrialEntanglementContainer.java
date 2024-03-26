@@ -74,6 +74,15 @@ public class IndustrialEntanglementContainer extends EntanglementContainer {
     }
 
     @Override
+    protected boolean onRightClick(@NotNull Location location, @NotNull Player player) {
+        if (multiblockInteract(location.getBlock(), player)) {
+            return true;
+        }
+        itemHolderInteract(location, "item", player, 16);
+        return true;
+    }
+
+    @Override
     protected DisplayGroup initModel(final @NotNull Location location, final @NotNull Player player) {
         return new ModelBuilder()
                 .add("frame1a", new ModelLine()
@@ -167,27 +176,5 @@ public class IndustrialEntanglementContainer extends EntanglementContainer {
     @Override
     public Map<Vector, ItemStack> getStructure() {
         return MAGNETS;
-    }
-
-    @Override
-    public void itemHolderInteract(@NotNull final Location location, @NotNull final String name, @NotNull final Player player) {
-        final Optional<ItemStack> currentStack = removeItem(location, name);
-        BlockStorageAPI.set(location, Keys.BS_IS_HOLDING_ITEM, false);
-        if (currentStack.isPresent() && !isEmptyItemStack(currentStack.get())) {
-            onRemove(location, name, currentStack.get()).ifPresent(itemStack -> ItemUtils.addOrDropItemMainHand(player, itemStack));
-            return;
-        }
-
-        final ItemStack itemStack = player.getInventory().getItemInMainHand();
-        final int amount = Math.min(itemStack.getAmount(), 16);
-        final ItemStack newItemStack = itemStack.clone();
-        newItemStack.setAmount(amount);
-        if (newItemStack.getType().isEmpty() || !onInsert(location, name, newItemStack, player)) {
-            return;
-        }
-
-        itemStack.subtract(amount);
-        ItemHolderBlock.insertItem(location, name, newItemStack);
-        BlockStorageAPI.set(location, Keys.BS_IS_HOLDING_ITEM, true);
     }
 }
