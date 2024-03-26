@@ -139,30 +139,27 @@ public class CreativeConcentrator extends ConnectedBlock implements ConfigPanelB
         getGroup(location).ifPresent(group -> {
             final float yaw = BlockStorageAPI.getFloat(location, Keys.BS_FACING);
             final List<ConnectionPoint> points = new ArrayList<>(group.getPointList());
-            points.removeIf(point -> !point.isOutput());
             points.sort(Comparator.comparingInt(point -> Integer.parseInt(point.getName().split(" ")[1])));
             Lists.reverse(points);
 
             final int pointCount = BlockStorageAPI.getInt(location, Keys.BS_POINTS);
-            for (int i = 0; i < points.size(); i++) {
-                if (i >= pointCount) {
-                    group.removePoint(points.get(i)).ifPresent(point -> {
+            for (int i = 1; i < points.size() + 1; i++) {
+                if (i > pointCount) {
+                    group.removePoint(points.get(i - 1)).ifPresent(point -> {
                         point.getLink().ifPresent(Link::remove);
                         point.remove();
                     });
                 }
             }
 
-            for (int i = 0; i < pointCount; i++) {
+            for (int i = 2; i < pointCount; i++) {
                 final Location pointLocation = formatPointLocation(yaw, location, getRelativeOutputLocation(i));
-                final ConnectionPoint point = points.size() > i ? points.get(i) : new ConnectionPoint(ConnectionPointType.OUTPUT, group.getId(), "output " + i, pointLocation);
-                if (points.size() > i && point.getLink().isEmpty()) {
-                    point.changeLocation(pointLocation);
+                if (points.size() >= i) {
+                    points.get(i - 1).changeLocation(pointLocation);
+                    continue;
                 }
 
-                if (points.size() <= i) {
-                    group.addPoint(point);
-                }
+                group.addPoint(new ConnectionPoint(ConnectionPointType.OUTPUT, group.getId(), "output " + i, pointLocation));
             }
         });
     }
