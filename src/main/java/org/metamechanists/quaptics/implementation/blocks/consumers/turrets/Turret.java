@@ -62,13 +62,13 @@ public abstract class Turret extends ConnectedBlock implements PowerAnimatedBloc
                 .add("power1", new ModelCuboid()
                         .material(settings.getTier().concreteMaterial)
                         .brightness(Utils.BRIGHTNESS_OFF)
-                        .scale(0.6F, 0.2F, 1.1F)
                         .translate(0, -0.25F, 0))
+                        .scale(0.6F, 0.2F, 1.1F)
                 .add("power2", new ModelCuboid()
                         .material(settings.getTier().concreteMaterial)
                         .brightness(Utils.BRIGHTNESS_OFF)
-                        .scale(1.1F, 0.2F, 0.6F)
                         .translate(0, -0.25F, 0))
+                        .scale(1.1F, 0.2F, 0.6F)
                 .buildAtBlockCenter(location);
     }
     @Override

@@ -100,14 +100,14 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
                 .add("auxiliary", new ModelCuboid()
                         .material(Material.GRAY_CONCRETE)
                         .lookAlong(player.getFacing())
-                        .scale(0.15F, 0.4F, 0.15F)
                         .translate(0, 0.2F, 0))
+                        .scale(0.15F, 0.4F, 0.15F)
                 .add("prism", new ModelCuboid()
                         .material(Material.GRAY_CONCRETE)
                         .brightness(Utils.BRIGHTNESS_OFF)
                         .lookAlong(player.getFacing())
-                        .scale(0.4F)
                         .rotateY(Math.PI/4))
+                        .scale(0.4F)
                 .buildAtBlockCenter(location);
     }
     @Override

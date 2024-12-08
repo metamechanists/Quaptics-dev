@@ -72,14 +72,14 @@ public class BeaconController1 extends BeaconController {
                 .add("module1", new ModelItem()
                         .item(getEmptyItemStack())
                         .brightness(Utils.BRIGHTNESS_ON)
-                        .scale(0.25F)
                         .translate(MODULE_1_LOCATION)
+                        .scale(0.25F)
                         .rotateY(0))
                 .add("module2", new ModelItem()
                         .item(getEmptyItemStack())
                         .brightness(Utils.BRIGHTNESS_ON)
-                        .scale(0.25F)
                         .translate(MODULE_2_LOCATION)
+                        .scale(0.25F)
                         .rotateY(Math.PI))
 
                 .buildAtBlockCenter(location);
