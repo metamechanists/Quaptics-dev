@@ -155,7 +155,10 @@ public class CreativeConcentrator extends ConnectedBlock implements ConfigPanelB
             for (int i = 2; i <= pointCount; i++) {
                 final Location pointLocation = formatPointLocation(yaw, location, getRelativeOutputLocation(i - 1));
                 if (points.size() >= i) {
-                    points.get(i - 1).changeLocation(pointLocation);
+                    ConnectionPoint point = points.get(i - 1);
+                    if (point.getLink().isEmpty()) {
+                        point.changeLocation(pointLocation);
+                    }
                     continue;
                 }
 
