@@ -9,7 +9,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.MainHand;
-import org.bukkit.util.Vector;
 import org.metamechanists.metalib.utils.LocationUtils;
 import org.metamechanists.quaptics.implementation.Settings;
 import org.metamechanists.quaptics.implementation.tools.QuapticChargeableItem;
@@ -36,8 +35,8 @@ public abstract class AbstractRayGun extends QuapticChargeableItem {
                         || (player.getMainHand() == MainHand.RIGHT && event.getHand() == EquipmentSlot.OFF_HAND);
 
         final Location eyeLocation = player.getEyeLocation();
-        final Location handLocation = LocationUtils.getHandLocation(player, leftHand).setDirection(new Vector());
-        final Location target = eyeLocation.clone().add(eyeLocation.getDirection().multiply(settings.getRange())).setDirection(new Vector());
+        final Location handLocation = LocationUtils.getHandLocation(player, leftHand);
+        final Location target = eyeLocation.clone().add(eyeLocation.getDirection().multiply(settings.getRange()));
 
         fireRayGun(player, eyeLocation, handLocation, target);
         setCharge(itemStack, stepCharge(settings, charge, -settings.getOutputPower()));

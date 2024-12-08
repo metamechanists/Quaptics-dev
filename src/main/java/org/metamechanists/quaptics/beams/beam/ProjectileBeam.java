@@ -31,7 +31,7 @@ public class ProjectileBeam implements Beam {
     public ProjectileBeam(final Player player, final Material material, final Location source, final Location target,
                           final float thickness, final float length, final float speed, final double damage, final int lifetimeTicks) {
         this.player = player;
-        this.velocity = Vector.fromJOML(TransformationUtils.getDisplacement(source, target).normalize().mul(speed));
+        this.velocity = Vector.fromJOML(TransformationUtils.getDirection(source, target).mul(speed));
         BlockDisplay projectile = new ModelLine()
                 .to(TransformationUtils.getDirection(source, target).mul(length))
                 .thickness(thickness)
