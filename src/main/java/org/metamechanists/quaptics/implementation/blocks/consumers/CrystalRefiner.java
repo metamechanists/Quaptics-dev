@@ -103,8 +103,8 @@ public class CrystalRefiner extends ConnectedBlock implements ItemHolderBlock, P
 
                 .add("item", new ModelItem()
                         .lookAlong(player.getFacing())
-                        .translate(0, 0.1F, 0))
                         .scale(0.5F)
+                        .translate(0, 0.1F, 0))
 
                 .buildAtBlockCenter(location);
     }
