@@ -16,7 +16,7 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
-import dev.sefiraat.sefilib.entity.display.DisplayGroup;
+import org.metamechanists.displaymodellib.sefilib.entity.display.DisplayGroup;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
@@ -56,19 +56,19 @@ public abstract class Turret extends ConnectedBlock implements PowerAnimatedBloc
         return new ModelBuilder()
                 .add("plate", new ModelCuboid()
                         .material(Material.POLISHED_ANDESITE)
-                        .scale(0.6F))
+                        .size(0.6F))
                 .add("barrel", new ModelCuboid()
                         .material(Material.GRAY_CONCRETE))
                 .add("power1", new ModelCuboid()
                         .material(settings.getTier().concreteMaterial)
                         .brightness(Utils.BRIGHTNESS_OFF)
-                        .scale(0.6F, 0.2F, 1.1F)
-                        .translate(0, -0.25F, 0))
+                        .size(0.6F, 0.2F, 1.1F)
+                        .location(0, -0.25F, 0))
                 .add("power2", new ModelCuboid()
                         .material(settings.getTier().concreteMaterial)
                         .brightness(Utils.BRIGHTNESS_OFF)
-                        .scale(1.1F, 0.2F, 0.6F)
-                        .translate(0, -0.25F, 0))
+                        .size(1.1F, 0.2F, 0.6F)
+                        .location(0, -0.25F, 0))
                 .buildAtBlockCenter(location);
     }
     @Override

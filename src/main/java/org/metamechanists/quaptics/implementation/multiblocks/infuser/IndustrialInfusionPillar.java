@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.displaymodellib.models.ModelBuilder;
 import org.metamechanists.displaymodellib.models.components.ModelCuboid;
-import dev.sefiraat.sefilib.entity.display.DisplayGroup;
+import org.metamechanists.displaymodellib.sefilib.entity.display.DisplayGroup;
 import org.metamechanists.quaptics.implementation.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
@@ -43,14 +43,14 @@ public class IndustrialInfusionPillar extends InfusionPillar {
         return new ModelBuilder()
                 .add("pillar", new ModelCuboid()
                         .material(Material.BLUE_CONCRETE)
-                        .lookAlong(player.getFacing())
-                        .scale(0.4F, 0.8F, 0.4F)
-                        .translate(0, -0.1F, 0))
+                        .facing(player.getFacing())
+                        .size(0.4F, 0.8F, 0.4F)
+                        .location(0, -0.1F, 0))
                 .add("prism", new ModelCuboid()
                         .material(Material.LIGHT_BLUE_STAINED_GLASS)
                         .brightness(Utils.BRIGHTNESS_OFF)
-                        .lookAlong(player.getFacing())
-                        .scale(0.3F))
+                        .facing(player.getFacing())
+                        .size(0.3F))
                 .buildAtBlockCenter(location);
     }
 }

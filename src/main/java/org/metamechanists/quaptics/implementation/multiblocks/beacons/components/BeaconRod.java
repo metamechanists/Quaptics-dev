@@ -8,7 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import dev.sefiraat.sefilib.entity.display.DisplayGroup;
+import org.metamechanists.displaymodellib.sefilib.entity.display.DisplayGroup;
 import org.metamechanists.quaptics.implementation.base.QuapticBlock;
 import org.metamechanists.quaptics.implementation.Settings;
 import org.metamechanists.quaptics.items.Lore;
@@ -39,7 +39,7 @@ public class BeaconRod extends QuapticBlock {
         return new ModelBuilder()
                 .add("main", new ModelCuboid()
                         .material(Material.GRAY_CONCRETE)
-                        .scale(0.4F, 1.01F, 0.4F))
+                        .size(0.4F, 1.01F, 0.4F))
                 .buildAtBlockCenter(location);
     }
     @Override

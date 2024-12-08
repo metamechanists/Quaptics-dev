@@ -11,7 +11,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import dev.sefiraat.sefilib.entity.display.DisplayGroup;
+import org.metamechanists.displaymodellib.sefilib.entity.display.DisplayGroup;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
@@ -102,25 +102,25 @@ public class Charger extends ConnectedBlock implements InfoPanelBlock, ItemHolde
         return new ModelBuilder()
                 .add("mainTop", new ModelCuboid()
                         .block(Material.POLISHED_DEEPSLATE_SLAB.createBlockData("[type=top]"))
-                        .translate(0, 0.35F, 0)
-                        .scale(0.6F, 0.3F, 0.6F))
+                        .location(0, 0.35F, 0)
+                        .size(0.6F, 0.3F, 0.6F))
                 .add("mainBottom", new ModelCuboid()
                         .block(Material.POLISHED_DEEPSLATE_SLAB.createBlockData("[type=bottom]"))
-                        .translate(0, -0.35F, 0)
-                        .scale(0.6F, 0.3F, 0.6F))
+                        .location(0, -0.35F, 0)
+                        .size(0.6F, 0.3F, 0.6F))
                 .add("glassTop", new ModelCuboid()
                         .material(settings.getTier().concreteMaterial)
                         .brightness(Utils.BRIGHTNESS_OFF)
-                        .translate(0, 0.35F, 0)
-                        .scale(0.4F, 0.15F, 0.4F))
+                        .location(0, 0.35F, 0)
+                        .size(0.4F, 0.15F, 0.4F))
                 .add("glassBottom", new ModelCuboid()
                         .material(settings.getTier().concreteMaterial)
                         .brightness(Utils.BRIGHTNESS_OFF)
-                        .translate(0, -0.35F, 0)
-                        .scale(0.4F, 0.15F, 0.4F))
+                        .location(0, -0.35F, 0)
+                        .size(0.4F, 0.15F, 0.4F))
                 .add("item", new ModelItem()
-                        .lookAlong(player.getFacing())
-                        .scale(0.5F))
+                        .facing(player.getFacing())
+                        .size(0.5F))
                 .buildAtBlockCenter(location);
     }
     @Override

@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
-import dev.sefiraat.sefilib.entity.display.DisplayGroup;
+import org.metamechanists.displaymodellib.sefilib.entity.display.DisplayGroup;
 import org.metamechanists.quaptics.implementation.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
@@ -63,24 +63,24 @@ public class BeaconController1 extends BeaconController {
     }
 
     @Override
-    protected dev.sefiraat.sefilib.entity.display.DisplayGroup initModel(@NotNull final Location location, @NotNull final Player player) {
+    protected org.metamechanists.displaymodellib.sefilib.entity.display.DisplayGroup initModel(@NotNull final Location location, @NotNull final Player player) {
         final DisplayGroup displayGroup = new ModelBuilder()
                 .add("main", new ModelCuboid()
                         .material(Material.BLUE_CONCRETE)
-                        .scale(0.5F, 1.0F, 0.5F))
+                        .size(0.5F, 1.0F, 0.5F))
 
                 .add("module1", new ModelItem()
                         .item(getEmptyItemStack())
                         .brightness(Utils.BRIGHTNESS_ON)
-                        .scale(0.25F)
-                        .translate(MODULE_1_LOCATION)
-                        .rotateY(0))
+                        .size(0.25F)
+                        .location(MODULE_1_LOCATION)
+                        .rotation(0))
                 .add("module2", new ModelItem()
                         .item(getEmptyItemStack())
                         .brightness(Utils.BRIGHTNESS_ON)
-                        .scale(0.25F)
-                        .translate(MODULE_2_LOCATION)
-                        .rotateY(Math.PI))
+                        .size(0.25F)
+                        .location(MODULE_2_LOCATION)
+                        .rotation(Math.PI))
 
                 .buildAtBlockCenter(location);
 

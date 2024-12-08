@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import dev.sefiraat.sefilib.entity.display.DisplayGroup;
+import org.metamechanists.displaymodellib.sefilib.entity.display.DisplayGroup;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
@@ -95,19 +95,19 @@ public class DiffractionGrating extends ConnectedBlock implements PowerAnimatedB
         return new ModelBuilder()
                 .add("main", new ModelCuboid()
                         .material(Material.YELLOW_TERRACOTTA)
-                        .lookAlong(player.getFacing())
-                        .scale(0.2F, 0.2F, 1.0F))
+                        .facing(player.getFacing())
+                        .size(0.2F, 0.2F, 1.0F))
                 .add("auxiliary", new ModelCuboid()
                         .material(Material.GRAY_CONCRETE)
-                        .lookAlong(player.getFacing())
-                        .scale(0.15F, 0.4F, 0.15F)
-                        .translate(0, 0.2F, 0))
+                        .facing(player.getFacing())
+                        .size(0.15F, 0.4F, 0.15F)
+                        .location(0, 0.2F, 0))
                 .add("prism", new ModelCuboid()
                         .material(Material.GRAY_CONCRETE)
                         .brightness(Utils.BRIGHTNESS_OFF)
-                        .lookAlong(player.getFacing())
-                        .scale(0.4F)
-                        .rotateY(Math.PI/4))
+                        .facing(player.getFacing())
+                        .size(0.4F)
+                        .rotation(Math.PI/4))
                 .buildAtBlockCenter(location);
     }
     @Override

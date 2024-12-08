@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import dev.sefiraat.sefilib.entity.display.DisplayGroup;
+import org.metamechanists.displaymodellib.sefilib.entity.display.DisplayGroup;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
@@ -55,15 +55,15 @@ public class OscillatingConcentrator extends ConnectedBlock {
                 .add("center", new ModelCuboid()
                         .material(Material.WHITE_CONCRETE)
                         .brightness(Utils.BRIGHTNESS_OFF)
-                        .scale(0.2F))
+                        .size(0.2F))
                 .add("plate", new ModelCuboid()
                         .material(Material.BLACK_STAINED_GLASS)
-                        .rotateY(Math.PI / 4)
-                        .scale(0.6F, 0.1F, 0.6F))
+                        .rotation(Math.PI / 4)
+                        .size(0.6F, 0.1F, 0.6F))
                 .add("glass", new ModelCuboid()
                         .material(Material.GLASS)
-                        .rotateY(Math.PI / 4)
-                        .scale(0.4F))
+                        .rotation(Math.PI / 4)
+                        .size(0.4F))
                 .buildAtBlockCenter(location);
     }
     @Override

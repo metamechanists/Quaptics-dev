@@ -8,7 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import dev.sefiraat.sefilib.entity.display.DisplayGroup;
+import org.metamechanists.displaymodellib.sefilib.entity.display.DisplayGroup;
 import org.metamechanists.quaptics.implementation.base.QuapticBlock;
 import org.metamechanists.quaptics.implementation.Settings;
 import org.metamechanists.quaptics.items.Lore;
@@ -41,8 +41,8 @@ public class BeaconComputer extends QuapticBlock {
                 .add("main", new ModelCuboid()
                         .material(Material.LIGHT_BLUE_STAINED_GLASS)
                         .brightness(Utils.BRIGHTNESS_OFF)
-                        .scale(0.8F, 1.0F, 0.8F)
-                        .rotateY(Math.PI / 4))
+                        .size(0.8F, 1.0F, 0.8F)
+                        .rotation(Math.PI / 4))
                 .buildAtBlockCenter(location);
     }
 }

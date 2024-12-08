@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import org.metamechanists.displaymodellib.models.ModelBuilder;
 import org.metamechanists.displaymodellib.models.components.ModelItem;
 import org.metamechanists.displaymodellib.models.components.ModelLine;
-import dev.sefiraat.sefilib.entity.display.DisplayGroup;
+import org.metamechanists.displaymodellib.sefilib.entity.display.DisplayGroup;
 import org.metamechanists.metalib.utils.ItemUtils;
 import org.metamechanists.quaptics.implementation.Settings;
 import org.metamechanists.quaptics.implementation.attachments.ItemHolderBlock;
@@ -154,7 +154,7 @@ public class IndustrialEntanglementContainer extends EntanglementContainer {
                 
                 .add("item", new ModelItem()
                         .brightness(Utils.BRIGHTNESS_ON)
-                        .scale(0.5F))
+                        .size(0.5F))
                 .buildAtBlockCenter(location);
     }
 

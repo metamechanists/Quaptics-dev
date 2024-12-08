@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import dev.sefiraat.sefilib.entity.display.DisplayGroup;
+import org.metamechanists.displaymodellib.sefilib.entity.display.DisplayGroup;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
@@ -63,18 +63,18 @@ public class EntanglementMagnet extends ConnectedBlock implements PowerAnimatedB
                 .add("panel1", new ModelCuboid()
                         .material(Material.MAGENTA_CONCRETE)
                         .brightness(Utils.BRIGHTNESS_OFF)
-                        .scale(0.4F, 0.2F, 0.2F)
-                        .rotate(ModelDiamond.ROTATION))
+                        .size(0.4F, 0.2F, 0.2F)
+                        .rotation(ModelDiamond.ROTATION))
                 .add("panel2", new ModelCuboid()
                         .material(Material.MAGENTA_CONCRETE)
                         .brightness(Utils.BRIGHTNESS_OFF)
-                        .scale(0.2F, 0.4F, 0.2F)
-                        .rotate(ModelDiamond.ROTATION))
+                        .size(0.2F, 0.4F, 0.2F)
+                        .rotation(ModelDiamond.ROTATION))
                 .add("panel3", new ModelCuboid()
                         .material(Material.MAGENTA_CONCRETE)
                         .brightness(Utils.BRIGHTNESS_OFF)
-                        .scale(0.2F, 0.2F, 0.4F)
-                        .rotate(ModelDiamond.ROTATION))
+                        .size(0.2F, 0.2F, 0.4F)
+                        .rotation(ModelDiamond.ROTATION))
                 .buildAtBlockCenter(location);
     }
     @Override

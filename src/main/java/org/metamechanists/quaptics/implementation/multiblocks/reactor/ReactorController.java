@@ -11,7 +11,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import dev.sefiraat.sefilib.entity.display.DisplayGroup;
+import org.metamechanists.displaymodellib.sefilib.entity.display.DisplayGroup;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
@@ -94,16 +94,16 @@ public class ReactorController extends ConnectedBlock implements ComplexMultiblo
                         .size(1.0F))
                 .add("panel1", new ModelCuboid()
                         .material(Material.CYAN_CONCRETE)
-                        .scale(0.8F, 0.6F, 0.6F)
-                        .rotate(ModelDiamond.ROTATION))
+                        .size(0.8F, 0.6F, 0.6F)
+                        .rotation(ModelDiamond.ROTATION))
                 .add("panel2", new ModelCuboid()
                         .material(Material.CYAN_CONCRETE)
-                        .scale(0.6F, 0.8F, 0.6F)
-                        .rotate(ModelDiamond.ROTATION))
+                        .size(0.6F, 0.8F, 0.6F)
+                        .rotation(ModelDiamond.ROTATION))
                 .add("panel3", new ModelCuboid()
                         .material(Material.CYAN_CONCRETE)
-                        .scale(0.6F, 0.6F, 0.8F)
-                        .rotate(ModelDiamond.ROTATION))
+                        .size(0.6F, 0.6F, 0.8F)
+                        .rotation(ModelDiamond.ROTATION))
                 .buildAtBlockCenter(location);
     }
     @Override

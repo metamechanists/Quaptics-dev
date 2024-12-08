@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import org.metamechanists.displaymodellib.models.ModelBuilder;
 import org.metamechanists.displaymodellib.models.components.ModelCuboid;
 import org.metamechanists.displaymodellib.models.components.ModelDiamond;
-import dev.sefiraat.sefilib.entity.display.DisplayGroup;
+import org.metamechanists.displaymodellib.sefilib.entity.display.DisplayGroup;
 import org.metamechanists.quaptics.implementation.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
@@ -51,18 +51,18 @@ public class IndustrialEntanglementMagnet extends EntanglementMagnet {
                 .add("panel1", new ModelCuboid()
                         .material(Material.PINK_CONCRETE)
                         .brightness(Utils.BRIGHTNESS_OFF)
-                        .scale(0.6F, 0.3F, 0.3F)
-                        .rotate(ModelDiamond.ROTATION))
+                        .size(0.6F, 0.3F, 0.3F)
+                        .rotation(ModelDiamond.ROTATION))
                 .add("panel2", new ModelCuboid()
                         .material(Material.PINK_CONCRETE)
                         .brightness(Utils.BRIGHTNESS_OFF)
-                        .scale(0.3F, 0.6F, 0.3F)
-                        .rotate(ModelDiamond.ROTATION))
+                        .size(0.3F, 0.6F, 0.3F)
+                        .rotation(ModelDiamond.ROTATION))
                 .add("panel3", new ModelCuboid()
                         .material(Material.PINK_CONCRETE)
                         .brightness(Utils.BRIGHTNESS_OFF)
-                        .scale(0.3F, 0.3F, 0.6F)
-                        .rotate(ModelDiamond.ROTATION))
+                        .size(0.3F, 0.3F, 0.6F)
+                        .rotation(ModelDiamond.ROTATION))
                 .buildAtBlockCenter(location);
     }
 }

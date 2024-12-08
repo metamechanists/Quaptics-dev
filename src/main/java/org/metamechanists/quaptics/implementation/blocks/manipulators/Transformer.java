@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import dev.sefiraat.sefilib.entity.display.DisplayGroup;
+import org.metamechanists.displaymodellib.sefilib.entity.display.DisplayGroup;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
@@ -84,20 +84,20 @@ public class Transformer extends ConnectedBlock implements PowerAnimatedBlock, P
         return new ModelBuilder()
                 .add("main", new ModelCuboid()
                         .material(Material.LIGHT_GRAY_CONCRETE)
-                        .lookAlong(player.getFacing())
-                        .scale(0.30F, 0.30F, 0.80F))
+                        .facing(player.getFacing())
+                        .size(0.30F, 0.30F, 0.80F))
                 .add("coil1", new ModelCuboid()
                         .material(settings.getTier().concreteMaterial)
                         .brightness(Utils.BRIGHTNESS_OFF)
-                        .lookAlong(player.getFacing())
-                        .translate(0.0F, 0.0F, 0.25F)
-                        .scale(0.20F, 0.60F, 0.20F))
+                        .facing(player.getFacing())
+                        .location(0.0F, 0.0F, 0.25F)
+                        .size(0.20F, 0.60F, 0.20F))
                 .add("coil2", new ModelCuboid()
                         .material(settings.getTier().concreteMaterial)
                         .brightness(Utils.BRIGHTNESS_OFF)
-                        .lookAlong(player.getFacing())
-                        .translate(0.0F, 0.0F, -0.25F)
-                        .scale(0.20F, 0.60F, 0.20F))
+                        .facing(player.getFacing())
+                        .location(0.0F, 0.0F, -0.25F)
+                        .size(0.20F, 0.60F, 0.20F))
                 .buildAtBlockCenter(location);
     }
     @Override

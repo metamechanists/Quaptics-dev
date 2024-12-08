@@ -10,7 +10,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import dev.sefiraat.sefilib.entity.display.DisplayGroup;
+import org.metamechanists.displaymodellib.sefilib.entity.display.DisplayGroup;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
@@ -72,8 +72,8 @@ public class Launchpad extends ConnectedBlock implements ConfigPanelBlock, Power
                 .add("plate", new ModelCuboid()
                         .material(Material.LIGHT_BLUE_CONCRETE)
                         .brightness(Utils.BRIGHTNESS_OFF)
-                        .translate(0, 0.5F, 0)
-                        .scale(0.8F, 0.1F, 0.8F))
+                        .location(0, 0.5F, 0)
+                        .size(0.8F, 0.1F, 0.8F))
                 .buildAtBlockCenter(location);
     }
     @Override
