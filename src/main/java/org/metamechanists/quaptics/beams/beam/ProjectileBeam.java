@@ -33,7 +33,6 @@ public class ProjectileBeam implements Beam {
         this.player = player;
         this.velocity = Vector.fromJOML(TransformationUtils.getDisplacement(source, target).normalize().mul(speed));
         BlockDisplay projectile = new ModelLine()
-                .from(source.toVector().toVector3f())
                 .to(TransformationUtils.getDirection(source, target).mul(length))
                 .thickness(thickness)
                 .brightness(Utils.BRIGHTNESS_ON)
