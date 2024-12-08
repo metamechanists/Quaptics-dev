@@ -8,7 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import org.metamechanists.displaymodellib.sefilib.entity.display.DisplayGroup;
+import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import org.metamechanists.quaptics.implementation.Settings;
 import org.metamechanists.quaptics.implementation.base.QuapticBlock;
 import org.metamechanists.quaptics.items.Lore;
@@ -49,20 +49,20 @@ public class BeaconBattery extends QuapticBlock {
         return new ModelBuilder()
                 .add("coil1", new ModelCuboid()
                         .material(settings.getTier().concreteMaterial)
-                        .size(0.1F, 0.8F, 1.1F)
-                        .location(0.3F, 0, 0))
+                        .scale(0.1F, 0.8F, 1.1F)
+                        .translate(0.3F, 0, 0))
                 .add("coil2", new ModelCuboid()
                         .material(settings.getTier().concreteMaterial)
-                        .size(0.1F, 0.8F, 1.1F)
-                        .location(-0.3F, 0, 0))
+                        .scale(0.1F, 0.8F, 1.1F)
+                        .translate(-0.3F, 0, 0))
                 .add("coil3", new ModelCuboid()
                         .material(settings.getTier().concreteMaterial)
-                        .size(1.1F, 0.8F, 0.1F)
-                        .location(0, 0, 0.3F))
+                        .scale(1.1F, 0.8F, 0.1F)
+                        .translate(0, 0, 0.3F))
                 .add("coil4", new ModelCuboid()
                         .material(settings.getTier().concreteMaterial)
-                        .size(1.1F, 0.8F, 0.1F)
-                        .location(0, 0, -0.3F))
+                        .scale(1.1F, 0.8F, 0.1F)
+                        .translate(0, 0, -0.3F))
                 .buildAtBlockCenter(location);
     }
     @Override

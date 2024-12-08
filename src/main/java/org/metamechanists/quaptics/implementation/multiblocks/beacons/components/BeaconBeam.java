@@ -8,7 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import org.metamechanists.displaymodellib.sefilib.entity.display.DisplayGroup;
+import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import org.metamechanists.quaptics.implementation.base.QuapticBlock;
 import org.metamechanists.quaptics.implementation.Settings;
 import org.metamechanists.quaptics.items.Lore;

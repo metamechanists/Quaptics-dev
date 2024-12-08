@@ -8,7 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import org.metamechanists.displaymodellib.sefilib.entity.display.DisplayGroup;
+import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import org.metamechanists.quaptics.implementation.base.QuapticBlock;
 import org.metamechanists.quaptics.implementation.Settings;
 import org.metamechanists.quaptics.items.Lore;
@@ -39,7 +39,7 @@ public class BeaconTransmitter extends QuapticBlock {
         return new ModelBuilder()
                 .add("main", new ModelCuboid()
                         .material(Material.LIGHT_GRAY_CONCRETE)
-                        .size(0.2F, 1.01F, 0.2F))
+                        .scale(0.2F, 1.01F, 0.2F))
                 .buildAtBlockCenter(location);
     }
     @Override

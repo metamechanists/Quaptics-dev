@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.metamechanists.displaymodellib.sefilib.entity.display.DisplayGroup;
+import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
@@ -64,16 +64,16 @@ public class BeaconPowerSupply extends ConnectedBlock {
         return new ModelBuilder()
                 .add("main", new ModelCuboid()
                         .material(Material.GRAY_CONCRETE)
-                        .size(1.1F, 1.0F, 1.1F)
-                        .rotation(Math.PI/4))
+                        .scale(1.1F, 1.0F, 1.1F)
+                        .rotateY(Math.PI/4))
                 .add("panel1", new ModelCuboid()
                         .material(settings.getTier().concreteMaterial)
-                        .size(0.8F, 0.7F, 1.2F)
-                        .rotation(Math.PI/4))
+                        .scale(0.8F, 0.7F, 1.2F)
+                        .rotateY(Math.PI/4))
                 .add("panel2", new ModelCuboid()
                         .material(settings.getTier().concreteMaterial)
-                        .size(1.2F, 0.7F, 0.8F)
-                        .rotation(Math.PI/4))
+                        .scale(1.2F, 0.7F, 0.8F)
+                        .rotateY(Math.PI/4))
                 .buildAtBlockCenter(location);
     }
     @Override

@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.metamechanists.displaymodellib.sefilib.entity.display.DisplayGroup;
+import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
@@ -100,7 +100,7 @@ public class MultiblockClicker extends ConnectedBlock implements PowerAnimatedBl
                 .add("main", new ModelCuboid()
                         .material(Material.CYAN_CONCRETE)
                         .brightness(Utils.BRIGHTNESS_OFF)
-                        .size(0.3F))
+                        .scale(0.3F))
                 .add("attachment", new ModelLine()
                         .material(Material.WHITE_CONCRETE)
                         .to(player.getFacing().getDirection().toVector3f())

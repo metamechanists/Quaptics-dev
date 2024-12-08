@@ -1,6 +1,6 @@
 package org.metamechanists.quaptics.implementation.multiblocks.beacons.controllers;
 
-import org.metamechanists.displaymodellib.sefilib.entity.display.DisplayGroup;
+import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
@@ -76,63 +76,63 @@ public class BeaconController3 extends BeaconController {
     }
 
     @Override
-    protected org.metamechanists.displaymodellib.sefilib.entity.display.DisplayGroup initModel(@NotNull final Location location, @NotNull final Player player) {
+    protected dev.sefiraat.sefilib.entity.display.DisplayGroup initModel(@NotNull final Location location, @NotNull final Player player) {
         final DisplayGroup displayGroup = new ModelBuilder()
                 .add("main", new ModelCuboid()
                         .material(Material.BLUE_CONCRETE)
-                        .size(0.8F, 1.0F, 0.8F))
+                        .scale(0.8F, 1.0F, 0.8F))
 
                 .add("module1", new ModelItem()
                         .item(getEmptyItemStack())
                         .brightness(Utils.BRIGHTNESS_ON)
-                        .size(0.25F)
-                        .location(MODULE_1_LOCATION)
-                        .rotation(0))
+                        .scale(0.25F)
+                        .translate(MODULE_1_LOCATION)
+                        .rotateY(0))
                 .add("module2", new ModelItem()
                         .item(getEmptyItemStack())
                         .brightness(Utils.BRIGHTNESS_ON)
-                        .size(0.25F)
-                        .location(MODULE_2_LOCATION)
-                        .rotation(0))
+                        .scale(0.25F)
+                        .translate(MODULE_2_LOCATION)
+                        .rotateY(0))
 
                 .add("module3", new ModelItem()
                         .item(getEmptyItemStack())
                         .brightness(Utils.BRIGHTNESS_ON)
-                        .size(0.25F)
-                        .location(MODULE_3_LOCATION)
-                        .rotation(Math.PI))
+                        .scale(0.25F)
+                        .translate(MODULE_3_LOCATION)
+                        .rotateY(Math.PI))
                 .add("module4", new ModelItem()
                         .item(getEmptyItemStack())
                         .brightness(Utils.BRIGHTNESS_ON)
-                        .size(0.25F)
-                        .location(MODULE_4_LOCATION)
-                        .rotation(Math.PI))
+                        .scale(0.25F)
+                        .translate(MODULE_4_LOCATION)
+                        .rotateY(Math.PI))
 
                 .add("module5", new ModelItem()
                         .item(getEmptyItemStack())
                         .brightness(Utils.BRIGHTNESS_ON)
-                        .size(0.25F)
-                        .location(MODULE_5_LOCATION)
-                        .rotation(Math.PI / 2))
+                        .scale(0.25F)
+                        .translate(MODULE_5_LOCATION)
+                        .rotateY(Math.PI / 2))
                 .add("module6", new ModelItem()
                         .item(getEmptyItemStack())
                         .brightness(Utils.BRIGHTNESS_ON)
-                        .size(0.25F)
-                        .location(MODULE_6_LOCATION)
-                        .rotation(Math.PI / 2))
+                        .scale(0.25F)
+                        .translate(MODULE_6_LOCATION)
+                        .rotateY(Math.PI / 2))
 
                 .add("module7", new ModelItem()
                         .item(getEmptyItemStack())
                         .brightness(Utils.BRIGHTNESS_ON)
-                        .size(0.25F)
-                        .location(MODULE_7_LOCATION)
-                        .rotation(-Math.PI / 2))
+                        .scale(0.25F)
+                        .translate(MODULE_7_LOCATION)
+                        .rotateY(-Math.PI / 2))
                 .add("module8", new ModelItem()
                         .item(getEmptyItemStack())
                         .brightness(Utils.BRIGHTNESS_ON)
-                        .size(0.25F)
-                        .location(MODULE_8_LOCATION)
-                        .rotation(-Math.PI / 2))
+                        .scale(0.25F)
+                        .translate(MODULE_8_LOCATION)
+                        .rotateY(-Math.PI / 2))
 
                 .buildAtBlockCenter(location);
 

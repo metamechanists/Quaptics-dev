@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.metamechanists.displaymodellib.sefilib.entity.display.DisplayGroup;
+import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
 import org.metamechanists.quaptics.connections.Link;
@@ -103,15 +103,15 @@ public class EnergyConcentrator extends EnergyConnectedBlock implements PowerAni
                 .add("center", new ModelCuboid()
                         .material(settings.getTier().concreteMaterial)
                         .brightness(Utils.BRIGHTNESS_OFF)
-                        .size(0.2F))
+                        .scale(0.2F))
                 .add("plate", new ModelCuboid()
                         .material(Material.GRAY_CONCRETE)
-                        .rotation(Math.PI / 4)
-                        .size(0.6F, 0.1F, 0.6F))
+                        .rotateY(Math.PI / 4)
+                        .scale(0.6F, 0.1F, 0.6F))
                 .add("glass", new ModelCuboid()
                         .material(Material.GLASS)
-                        .rotation(Math.PI / 4)
-                        .size(0.4F))
+                        .rotateY(Math.PI / 4)
+                        .scale(0.4F))
                 .buildAtBlockCenter(location);
     }
     @Override

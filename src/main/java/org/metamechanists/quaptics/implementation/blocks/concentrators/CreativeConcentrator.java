@@ -16,7 +16,7 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.displaymodellib.models.ModelBuilder;
 import org.metamechanists.displaymodellib.models.components.ModelCuboid;
-import org.metamechanists.displaymodellib.sefilib.entity.display.DisplayGroup;
+import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import org.metamechanists.displaymodellib.transformations.TransformationUtils;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
@@ -74,15 +74,15 @@ public class CreativeConcentrator extends ConnectedBlock implements ConfigPanelB
                 .add("center", new ModelCuboid()
                         .material(Material.PURPLE_GLAZED_TERRACOTTA)
                         .brightness(Utils.BRIGHTNESS_ON)
-                        .size(0.2F))
+                        .scale(0.2F))
                 .add("plate", new ModelCuboid()
                         .material(Material.GRAY_CONCRETE)
-                        .rotation(Math.PI / 4)
-                        .size(0.6F, 0.1F, 0.6F))
+                        .rotateY(Math.PI / 4)
+                        .scale(0.6F, 0.1F, 0.6F))
                 .add("glass", new ModelCuboid()
                         .material(Material.TINTED_GLASS)
-                        .rotation(Math.PI / 4)
-                        .size(0.4F))
+                        .rotateY(Math.PI / 4)
+                        .scale(0.4F))
                 .buildAtBlockCenter(location);
     }
     @Override

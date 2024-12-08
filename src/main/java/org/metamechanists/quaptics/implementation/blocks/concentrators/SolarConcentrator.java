@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.metamechanists.displaymodellib.models.components.ModelItem;
-import org.metamechanists.displaymodellib.sefilib.entity.display.DisplayGroup;
+import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
@@ -72,11 +72,11 @@ public class SolarConcentrator extends ConnectedBlock implements PowerAnimatedBl
                 .add("center", new ModelCuboid()
                         .material(settings.getTier().concreteMaterial)
                         .brightness(Utils.BRIGHTNESS_OFF)
-                        .size(0.20F))
+                        .scale(0.20F))
                 .add("panel", new ModelItem()
                         .material(Material.GLASS_PANE)
-                        .rotation(Math.PI / 2, 0, Math.PI / 4)
-                        .size(0.90F))
+                        .rotate(Math.PI / 2, 0, Math.PI / 4)
+                        .scale(0.90F))
                 .buildAtBlockCenter(location);
     }
     @Override

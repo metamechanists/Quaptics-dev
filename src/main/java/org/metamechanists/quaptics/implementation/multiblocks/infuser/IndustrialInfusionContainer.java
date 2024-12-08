@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import org.metamechanists.displaymodellib.models.ModelBuilder;
 import org.metamechanists.displaymodellib.models.components.ModelCuboid;
 import org.metamechanists.displaymodellib.models.components.ModelItem;
-import org.metamechanists.displaymodellib.sefilib.entity.display.DisplayGroup;
+import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import org.metamechanists.quaptics.implementation.Settings;
 import org.metamechanists.quaptics.items.Lore;
 import org.metamechanists.quaptics.items.Tier;
@@ -69,38 +69,38 @@ public class IndustrialInfusionContainer extends InfusionContainer {
         return new ModelBuilder()
                 .add("base", new ModelCuboid()
                         .material(Material.GRAY_CONCRETE)
-                        .facing(player.getFacing())
-                        .size(1.3F, 0.4F, 1.3F)
-                        .location(0, -0.3F, 0))
+                        .lookAlong(player.getFacing())
+                        .scale(1.3F, 0.4F, 1.3F)
+                        .translate(0, -0.3F, 0))
                 .add("pillar1", new ModelCuboid()
                         .material(Material.ORANGE_CONCRETE)
-                        .facing(player.getFacing())
-                        .location(-0.6F, -0.1F, -0.6F)
-                        .size(0.25F, 0.8F, 0.25F))
+                        .lookAlong(player.getFacing())
+                        .translate(-0.6F, -0.1F, -0.6F)
+                        .scale(0.25F, 0.8F, 0.25F))
                 .add("pillar2", new ModelCuboid()
                         .material(Material.ORANGE_CONCRETE)
-                        .facing(player.getFacing())
-                        .location(-0.6F, -0.1F, 0.6F)
-                        .size(0.25F, 0.8F, 0.25F))
+                        .lookAlong(player.getFacing())
+                        .translate(-0.6F, -0.1F, 0.6F)
+                        .scale(0.25F, 0.8F, 0.25F))
                 .add("pillar3", new ModelCuboid()
                         .material(Material.ORANGE_CONCRETE)
-                        .facing(player.getFacing())
-                        .location(0.6F, -0.1F, -0.6F)
-                        .size(0.25F, 0.8F, 0.25F))
+                        .lookAlong(player.getFacing())
+                        .translate(0.6F, -0.1F, -0.6F)
+                        .scale(0.25F, 0.8F, 0.25F))
                 .add("pillar4", new ModelCuboid()
                         .material(Material.ORANGE_CONCRETE)
-                        .facing(player.getFacing())
-                        .location(0.6F, -0.1F, 0.6F)
-                        .size(0.25F, 0.8F, 0.25F))
+                        .lookAlong(player.getFacing())
+                        .translate(0.6F, -0.1F, 0.6F)
+                        .scale(0.25F, 0.8F, 0.25F))
                 .add("plate", new ModelCuboid()
                         .material(Material.WHITE_CONCRETE)
-                        .facing(player.getFacing())
-                        .location(0, -0.1F, 0)
-                        .size(0.6F, 0.1F, 0.6F))
+                        .lookAlong(player.getFacing())
+                        .translate(0, -0.1F, 0)
+                        .scale(0.6F, 0.1F, 0.6F))
                 .add("item", new ModelItem()
                         .brightness(Utils.BRIGHTNESS_ON)
-                        .location(0, 0.4F, 0)
-                        .size(0.8F))
+                        .translate(0, 0.4F, 0)
+                        .scale(0.8F))
                 .buildAtBlockCenter(location);
     }
 

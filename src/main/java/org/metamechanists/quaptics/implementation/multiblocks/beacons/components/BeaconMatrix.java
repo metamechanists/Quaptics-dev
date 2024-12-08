@@ -8,7 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import org.metamechanists.displaymodellib.sefilib.entity.display.DisplayGroup;
+import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import org.metamechanists.quaptics.implementation.base.QuapticBlock;
 import org.metamechanists.quaptics.implementation.Settings;
 import org.metamechanists.quaptics.items.Lore;
@@ -41,8 +41,8 @@ public class BeaconMatrix extends QuapticBlock {
                 .add("main", new ModelCuboid()
                         .material(Material.LIGHT_BLUE_CONCRETE)
                         .brightness(Utils.BRIGHTNESS_OFF)
-                        .size(1.2F, 1.2F, 1.2F)
-                        .rotation(Math.PI/4))
+                        .scale(1.2F, 1.2F, 1.2F)
+                        .rotateY(Math.PI/4))
                 .buildAtBlockCenter(location);
     }
 }

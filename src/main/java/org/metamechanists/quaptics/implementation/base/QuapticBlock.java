@@ -1,7 +1,7 @@
 package org.metamechanists.quaptics.implementation.base;
 
 import com.destroystokyo.paper.ParticleBuilder;
-import org.metamechanists.displaymodellib.sefilib.entity.display.DisplayGroup;
+import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -97,7 +97,7 @@ public abstract class QuapticBlock extends SlimefunItem {
     }
 
     @ParametersAreNonnullByDefault
-    protected abstract org.metamechanists.displaymodellib.sefilib.entity.display.DisplayGroup initModel(Location location, Player player);
+    protected abstract dev.sefiraat.sefilib.entity.display.DisplayGroup initModel(Location location, Player player);
     protected void initBlockStorage(@NotNull final Location location, @NotNull Player player) {}
 
     protected void onPlace(@NotNull final BlockPlaceEvent event) {}

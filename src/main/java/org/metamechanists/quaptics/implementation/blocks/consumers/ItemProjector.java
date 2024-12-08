@@ -15,7 +15,7 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
-import org.metamechanists.displaymodellib.sefilib.entity.display.DisplayGroup;
+import dev.sefiraat.sefilib.entity.display.DisplayGroup;
 import org.metamechanists.quaptics.connections.ConnectionGroup;
 import org.metamechanists.quaptics.connections.ConnectionPoint;
 import org.metamechanists.quaptics.connections.ConnectionPointType;
@@ -82,14 +82,14 @@ public class ItemProjector extends ConnectedBlock implements ItemHolderBlock, Po
         return new ModelBuilder()
                 .add("main", new ModelCuboid()
                         .material(Material.LIGHT_GRAY_CONCRETE)
-                        .location(0, -0.2F, 0)
-                        .size(1.0F, 0.6F, 1.0F))
+                        .translate(0, -0.2F, 0)
+                        .scale(1.0F, 0.6F, 1.0F))
                 .add("prism", new ModelCuboid()
                         .block(Material.LIGHT_BLUE_STAINED_GLASS.createBlockData())
                         .brightness(Utils.BRIGHTNESS_OFF)
-                        .location(0, 0.1F, 0)
-                        .size(0.6F, 0.1F, 0.6F)
-                        .rotation(Math.PI / 4))
+                        .translate(0, 0.1F, 0)
+                        .scale(0.6F, 0.1F, 0.6F)
+                        .rotateY(Math.PI / 4))
                 .add("item", new ModelItem()
                         .viewRange(Utils.VIEW_RANGE_OFF)
                         .billboard(Billboard.VERTICAL)
