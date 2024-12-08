@@ -1,10 +1,13 @@
 package org.metamechanists.quaptics.implementation.tools.raygun;
 
+import com.destroystokyo.paper.ParticleBuilder;
 import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import org.bukkit.Color;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
@@ -37,6 +40,8 @@ public abstract class AbstractRayGun extends QuapticChargeableItem {
         final Location eyeLocation = player.getEyeLocation();
         final Location handLocation = LocationUtils.getHandLocation(player, leftHand);
         final Location target = eyeLocation.clone().add(eyeLocation.getDirection().multiply(settings.getRange()));
+        new ParticleBuilder(Particle.REDSTONE).count(1).location(handLocation).data(new Particle.DustOptions(Color.RED, 1)).spawn();
+        new ParticleBuilder(Particle.REDSTONE).count(1).location(target).data(new Particle.DustOptions(Color.GREEN, 1)).spawn();
 
         fireRayGun(player, eyeLocation, handLocation, target);
         setCharge(itemStack, stepCharge(settings, charge, -settings.getOutputPower()));

@@ -12,6 +12,7 @@ import org.bukkit.util.Vector;
 import org.metamechanists.displaymodellib.models.components.ModelLine;
 import org.metamechanists.displaymodellib.transformations.TransformationUtils;
 import org.metamechanists.quaptics.beams.DeprecatedBeamStorage;
+import org.metamechanists.quaptics.storage.QuapticTicker;
 import org.metamechanists.quaptics.utils.Utils;
 import org.metamechanists.quaptics.utils.id.simple.BlockDisplayId;
 
@@ -31,13 +32,17 @@ public class ProjectileBeam implements Beam {
                           final float thickness, final float length, final float speed, final double damage, final int lifetimeTicks) {
         this.player = player;
         this.velocity = Vector.fromJOML(TransformationUtils.getDisplacement(source, target).normalize().mul(speed));
-        this.displayId = new BlockDisplayId(new ModelLine()
+        BlockDisplay projectile = new ModelLine()
+                .from(source.toVector().toVector3f())
                 .to(TransformationUtils.getDirection(source, target).mul(length))
                 .thickness(thickness)
                 .brightness(Utils.BRIGHTNESS_ON)
                 .material(material)
-                .build(source)
-                .getUniqueId());
+                .build(source);
+        if (!Slimefun.getMinecraftVersion().isBefore(20, 2)) {
+            projectile.setTeleportDuration(QuapticTicker.INTERVAL_TICKS);
+        }
+        this.displayId = new BlockDisplayId(projectile.getUniqueId());
         this.thickness = thickness;
         this.damage = damage;
         this.lifetimeTicks = lifetimeTicks;
