@@ -5,6 +5,7 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.updater.BlobBuildUpdat
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.libraries.paperlib.PaperLib;
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -73,6 +74,8 @@ public final class Quaptics extends JavaPlugin implements SlimefunAddon {
         initializeListeners();
         initializeRunnables();
         initializeCommands();
+
+        Bukkit.getLogger().severe("bruh");
 
         new Metrics(this, BSTATS_ID);
     }
